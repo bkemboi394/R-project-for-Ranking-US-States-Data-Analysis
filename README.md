@@ -1,22 +1,24 @@
 # STA518-PROJECT-DRAFT
+**Authors:** Moreen Owino and Beatrice Kemboi
+
 <u>**An analysis on the overall best US states to live in based on various metric data from 2011 to 2021.**</u>
 
 
 **Objectives:**
 
-- Rank US states based on various metric data such as education, health care, crime rate, unemployment, infrastructure,economy, natural environment,opportunity,population density and fiscal stability,
+1 ) Rank US states based on various metric data such as education, health care, crime rate, unemployment, infrastructure,economy, natural environment,opportunity,population density and fiscal stability,
 
--  Analyze the rankings of these states with regard to the above metrics over a period of 10 years to draw various conclusions on the following:
+2 ) Analyze the rankings of these states with regard to the above metrics over a period of 10 years to draw various conclusions on the following:
 
-1.) Which states have consistently ranked top over the years hence best states to live in.
+- Which states have consistently ranked top over the years hence best states to live in.
 
-2.) Which states have improved their ranking over the years and what led to the improvement
+- Which states have improved their ranking over the years and what led to the improvement
 
-3.) Based on the analysis ,try and predict which states will most likely continue to rank at the top based on their historical performance.
+- Based on the analysis ,try and predict which states will most likely continue to rank at the top based on their historical performance.
 
-4.) Check whether there’s any correlation between population density and performance
+- Check whether there’s any correlation between population density and performance
 
-5.) Find out the rate at which people have been moving in and out of particular states, and how that is related to its ranking.
+- Find out the rate at which people have been moving in and out of particular states, and how that is related to its ranking.
 
 
 **Critical Review**
