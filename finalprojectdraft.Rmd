@@ -1,0 +1,225 @@
+---
+title: "finalprojectdraft_code"
+author: "Beatrice"
+date: "4/4/2022"
+output: html_document 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## R Markdown
+```{r load tidyverse}
+library(tidyverse)
+
+
+```
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r load & wrangling hospitals data}
+th2011 <- read_csv("totalhospitals2011.csv")
+th_2011 <- th2011 %>% 
+       slice(-(1:3)) %>% 
+          rename('2011'= X2,States= `Title: Total Hospitals | KFF`)
+th2012 <- read_csv("totalhospitals2012.csv")
+th_2012 <- th2012 %>% 
+       slice(-(1:3)) %>% 
+          rename('2012'= X2,States= `Title: Total Hospitals | KFF`)
+th2013 <- read_csv("totalhospitals2013.csv")
+th_2013 <- th2013 %>% 
+       slice(-(1:3)) %>% 
+          rename('2013'= X2,States= `Title: Total Hospitals | KFF`)
+th2014 <- read_csv("totalhospitals2014.csv")
+th_2014 <- th2014 %>% 
+       slice(-(1:3)) %>% 
+          rename('2014'= X2,States= `Title: Total Hospitals | KFF`)
+th2015 <- read_csv("totalhospitals2015.csv")
+th_2015 <- th2015 %>% 
+       slice(-(1:3)) %>% 
+          rename('2015'= X2,States= `Title: Total Hospitals | KFF`)
+th2016 <- read_csv("totalhospitals2016.csv")
+th_2016 <- th2016 %>% 
+       slice(-(1:3)) %>% 
+          rename('2016'= X2,States= `Title: Total Hospitals | KFF`)
+th2017 <- read_csv("totalhospitals2017.csv")
+th_2017 <- th2017 %>% 
+       slice(-(1:3)) %>% 
+          rename('2017'= X2,States= `Title: Total Hospitals | KFF`)
+th2018 <- read_csv("totalhospitals2018.csv")
+th_2018 <- th2018 %>% 
+       slice(-(1:3)) %>% 
+          rename('2018'= X2,States= `Title: Total Hospitals | KFF`)
+th2019 <- read_csv("totalhospitals2019.csv")
+th_2019 <- th2019 %>% 
+       slice(-(1:3)) %>% 
+          rename('2019'= X2,States= `Title: Total Hospitals | KFF`)
+th2020 <- read_csv("totalhospitals2020.csv")
+th_2020 <- th2020 %>% 
+       slice(-(1:3)) %>% 
+          rename('2020'= X2,States= `Title: Total Hospitals | KFF`)
+
+```
+
+
+##Cleaning the data above
+```{r joining hospitals data }
+statehospitals_from2011 <- th_2011 %>% 
+  inner_join(th_2012, by='States') %>% 
+    inner_join(th_2013, by='States') %>% 
+      inner_join(th_2014, by='States') %>% 
+        inner_join(th_2015, by='States') %>% 
+          inner_join(th_2016, by='States') %>% 
+             inner_join(th_2017, by='States') %>% 
+               inner_join(th_2018, by='States') %>% 
+                 inner_join(th_2019, by='States') %>% 
+                    inner_join(th_2020, by='States') %>% 
+                      na.omit
+                     
+
+statehospitals_from2011
+
+```
+
+
+## Health Insurance Data
+
+```{r loading health insurance data}
+hi2011 <- read_csv("insurance_coverage2011.csv")
+hinsurance_2011 <- hi2011 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2012 <- read_csv("insurance_coverage2012.csv")
+hinsurance_2012 <- hi2012 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2013 <- read_csv("insurance_coverage2013.csv")
+hinsurance_2013 <- hi2013 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2014 <- read_csv("insurance_coverage2014.csv")
+hinsurance_2014 <- hi2014 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2015 <- read_csv("insurance_coverage2015.csv")
+hinsurance_2015 <- hi2015 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2016 <- read_csv("insurance_coverage2016.csv")
+hinsurance_2016 <- hi2016 %>% 
+slice(-(1:3)) %>% 
+rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2017 <- read_csv("insurance_coverage2017.csv")
+hinsurance_2017 <- hi2017 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2018 <- read_csv("insurance_coverage2018.csv")
+hinsurance_2018 <- hi2018 %>% 
+slice(-(1:3)) %>% 
+rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2019 <- read_csv("insurance_coverage2019.csv")
+hinsurance_2019 <- hi2019 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2020 <- read_csv("insurance_coverage2020.csv")
+hinsurance_2020 <- hi2020 %>% 
+slice(-(1:3)) %>% 
+rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+
+```
+
+#Insurance entities considered are employer, non-group,medicare,medicaid, and military
+
+```{r subsetting and joining health insurance data}
+hi_2011 <- hinsurance_2011 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2011'=Insured) %>% 
+      select(States, '2011') %>% 
+        na.omit
+hi_2012 <- hinsurance_2012 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2012'=Insured) %>% 
+      select(States, '2012') %>% 
+        na.omit
+hi_2013 <- hinsurance_2013 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2013'=Insured) %>% 
+      select(States, '2013') %>% 
+         na.omit
+hi_2014 <- hinsurance_2014 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2014'=Insured) %>% 
+      select(States, '2014') %>% 
+        na.omit
+hi_2015 <- hinsurance_2015 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2015'=Insured) %>% 
+      select(States, '2015') %>% 
+        na.omit
+hi_2016 <- hinsurance_2016 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2016'=Insured) %>% 
+      select(States, '2016') %>% 
+        na.omit
+hi_2017 <- hinsurance_2017 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2017'=Insured) %>% 
+      select(States, '2017') %>% 
+         na.omit
+hi_2018 <- hinsurance_2018 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2018'=Insured) %>% 
+      select(States, '2018') %>% 
+         na.omit
+hi_2019 <- hinsurance_2019 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2019'=Insured) %>% 
+      select(States, '2019') %>% 
+        na.omit
+hi_2020 <- hinsurance_2020 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2020'=Insured) %>% 
+      select(States, '2020') %>% 
+        na.omit
+
+
+
+   
+
+
+```
+
+
+
+```{r}
+
+state_hinsurance_from2011 <- hi_2011 %>% 
+  inner_join(hi_2012, by='States') %>% 
+    inner_join(hi_2013, by='States') %>% 
+      inner_join(hi_2014, by='States') %>% 
+        inner_join(hi_2015, by='States') %>% 
+          inner_join(hi_2016, by='States') %>% 
+             inner_join(hi_2017, by='States') %>% 
+               inner_join(hi_2018, by='States') %>% 
+                 inner_join(hi_2019, by='States') %>% 
+                    inner_join(hi_2020, by='States') 
+                      
+                     
+state_hinsurance_from2011
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
