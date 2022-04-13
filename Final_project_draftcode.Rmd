@@ -1,0 +1,732 @@
+---
+title: "finalproject_codedraft"
+author: "Beatrice"
+date: "4/6/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+```{r load tidyverse}
+library(tidyverse)
+```
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r load & wrangling hospitals data}
+th2011 <- read_csv("totalhospitals2011.csv")
+th_2011 <- th2011 %>% 
+       slice(-(1:3)) %>% 
+          rename('2011'= X2,States= `Title: Total Hospitals | KFF`)
+th2012 <- read_csv("totalhospitals2012.csv")
+th_2012 <- th2012 %>% 
+       slice(-(1:3)) %>% 
+          rename('2012'= X2,States= `Title: Total Hospitals | KFF`)
+th2013 <- read_csv("totalhospitals2013.csv")
+th_2013 <- th2013 %>% 
+       slice(-(1:3)) %>% 
+          rename('2013'= X2,States= `Title: Total Hospitals | KFF`)
+th2014 <- read_csv("totalhospitals2014.csv")
+th_2014 <- th2014 %>% 
+       slice(-(1:3)) %>% 
+          rename('2014'= X2,States= `Title: Total Hospitals | KFF`)
+th2015 <- read_csv("totalhospitals2015.csv")
+th_2015 <- th2015 %>% 
+       slice(-(1:3)) %>% 
+          rename('2015'= X2,States= `Title: Total Hospitals | KFF`)
+th2016 <- read_csv("totalhospitals2016.csv")
+th_2016 <- th2016 %>% 
+       slice(-(1:3)) %>% 
+          rename('2016'= X2,States= `Title: Total Hospitals | KFF`)
+th2017 <- read_csv("totalhospitals2017.csv")
+th_2017 <- th2017 %>% 
+       slice(-(1:3)) %>% 
+          rename('2017'= X2,States= `Title: Total Hospitals | KFF`)
+th2018 <- read_csv("totalhospitals2018.csv")
+th_2018 <- th2018 %>% 
+       slice(-(1:3)) %>% 
+          rename('2018'= X2,States= `Title: Total Hospitals | KFF`)
+th2019 <- read_csv("totalhospitals2019.csv")
+th_2019 <- th2019 %>% 
+       slice(-(1:3)) %>% 
+          rename('2019'= X2,States= `Title: Total Hospitals | KFF`)
+th2020 <- read_csv("totalhospitals2020.csv")
+th_2020 <- th2020 %>% 
+       slice(-(1:3)) %>% 
+          rename('2020'= X2,States= `Title: Total Hospitals | KFF`)
+
+```
+
+
+##Cleaning the data above
+```{r joining hospitals data }
+statehospitals_from2011 <- th_2011 %>% 
+  inner_join(th_2012, by='States') %>% 
+    inner_join(th_2013, by='States') %>% 
+      inner_join(th_2014, by='States') %>% 
+        inner_join(th_2015, by='States') %>% 
+          inner_join(th_2016, by='States') %>% 
+             inner_join(th_2017, by='States') %>% 
+               inner_join(th_2018, by='States') %>% 
+                 inner_join(th_2019, by='States') %>% 
+                    inner_join(th_2020, by='States') %>% 
+                      na.omit
+                     
+
+statehospitals_from2011
+
+```
+
+
+## Health Insurance Data
+
+```{r loading health insurance data}
+hi2011 <- read_csv("insurance_coverage2011.csv")
+hinsurance_2011 <- hi2011 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2012 <- read_csv("insurance_coverage2012.csv")
+hinsurance_2012 <- hi2012 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2013 <- read_csv("insurance_coverage2013.csv")
+hinsurance_2013 <- hi2013 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2014 <- read_csv("insurance_coverage2014.csv")
+hinsurance_2014 <- hi2014 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2015 <- read_csv("insurance_coverage2015.csv")
+hinsurance_2015 <- hi2015 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2016 <- read_csv("insurance_coverage2016.csv")
+hinsurance_2016 <- hi2016 %>% 
+slice(-(1:3)) %>% 
+rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2017 <- read_csv("insurance_coverage2017.csv")
+hinsurance_2017 <- hi2017 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2018 <- read_csv("insurance_coverage2018.csv")
+hinsurance_2018 <- hi2018 %>% 
+slice(-(1:3)) %>% 
+rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2019 <- read_csv("insurance_coverage2019.csv")
+hinsurance_2019 <- hi2019 %>% 
+ slice(-(1:3)) %>% 
+  rename(States= `Title: Health Insurance Coverage of the Total Population | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+hi2020 <- read_csv("insurance_coverage2020.csv")
+hinsurance_2020 <- hi2020 %>% 
+slice(-(1:3)) %>% 
+rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) | KFF`) %>%    rename(Employer=X2,Non_Group=X3,Medicaid=X4,Medicare=X5,Military=X6,Uninsured=X7,Total_Population=X8) 
+
+```
+
+#Insurance entities considered are employer, non-group,medicare,medicaid, and military
+
+```{r subsetting and joining health insurance data}
+hi_2011 <- hinsurance_2011 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2011'=Insured) %>% 
+      select(States, '2011') %>% 
+        na.omit
+hi_2012 <- hinsurance_2012 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2012'=Insured) %>% 
+      select(States, '2012') %>% 
+        na.omit
+hi_2013 <- hinsurance_2013 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2013'=Insured) %>% 
+      select(States, '2013') %>% 
+         na.omit
+hi_2014 <- hinsurance_2014 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2014'=Insured) %>% 
+      select(States, '2014') %>% 
+        na.omit
+hi_2015 <- hinsurance_2015 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2015'=Insured) %>% 
+      select(States, '2015') %>% 
+        na.omit
+hi_2016 <- hinsurance_2016 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2016'=Insured) %>% 
+      select(States, '2016') %>% 
+        na.omit
+hi_2017 <- hinsurance_2017 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2017'=Insured) %>% 
+      select(States, '2017') %>% 
+         na.omit
+hi_2018 <- hinsurance_2018 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2018'=Insured) %>% 
+      select(States, '2018') %>% 
+         na.omit
+hi_2019 <- hinsurance_2019 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2019'=Insured) %>% 
+      select(States, '2019') %>% 
+        na.omit
+hi_2020 <- hinsurance_2020 %>% 
+  select(States,Total_Population,Uninsured) %>% 
+    mutate(Insured = as.numeric(Total_Population) - as.numeric(Uninsured)) %>% 
+     rename('2020'=Insured) %>% 
+      select(States, '2020') %>% 
+        na.omit
+
+
+
+   
+
+
+```
+
+
+
+```{r}
+
+state_hinsurance_from2011 <- hi_2011 %>% 
+  inner_join(hi_2012, by='States') %>% 
+    inner_join(hi_2013, by='States') %>% 
+      inner_join(hi_2014, by='States') %>% 
+        inner_join(hi_2015, by='States') %>% 
+          inner_join(hi_2016, by='States') %>% 
+             inner_join(hi_2017, by='States') %>% 
+               inner_join(hi_2018, by='States') %>% 
+                 inner_join(hi_2019, by='States') %>% 
+                    inner_join(hi_2020, by='States') 
+                      
+                     
+state_hinsurance_from2011
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r Loading unemployment rates data to 2018}
+unemploymentrates_2011to2018 <- read_csv(here::here("stateunemploymentdata", "stateunemploymentrates_to2018.csv"))
+
+#names(unemploymentrates_2011to2018) <- NULL
+unemploymentrates_2011to2018
+
+```
+
+```{r cleaning unemployment data}
+States_ur_2011to2018 <- unemploymentrates_2011to2018 %>% 
+slice(-(1:4)) 
+   
+States_ur_2011to2018
+
+```
+
+```{r removing headers and using first row as headers}
+names(States_ur_2011to2018) <- NULL
+#States_ur_2011to2018
+names(States_ur_2011to2018) <- States_ur_2011to2018[1,]
+States_ur_2011to2018
+
+```
+
+```{r final preprocessing }
+statesunemploymentrates_2011to2018 <- States_ur_2011to2018 %>% 
+  slice(-c(1:2)) %>% 
+   rename(States=Area) %>% 
+    select(-c("1980":"2010"),-1) %>% 
+     na.omit
+```
+#Loading unemployment data for 2019 and 2020 and joining with the rest
+
+```{r Loading 2019/2020 unemployment rates}
+statesur_2019 <- read_csv(here::here("stateunemploymentdata", "statesunemploymentrate_2019.csv"))
+statesur_2020 <- read_csv(here::here("stateunemploymentdata", "statesunemploymentrate_2020.csv"))
+```
+
+```{r joining with the rest}
+statesunemploymentrates_2011to2020 <- statesunemploymentrates_2011to2018 %>% 
+      inner_join(statesur_2019, by = "States") %>% 
+       inner_join(statesur_2020, by = "States")
+statesunemploymentrates_2011to2020
+
+```
+
+
+
+
+#Median Income Data
+```{r Loading median income for every state from 2011}
+statesmedianincome_to2018 <- read_csv(here::here("Statesmedianincome", "medianstateincome_to2018.csv"))
+
+
+```
+
+```{r removing first few unwanted rows}
+states_medianincome_to2018 <- statesmedianincome_to2018 %>% 
+slice(-(1:3)) 
+   
+states_medianincome_to2018
+
+
+```
+
+```{r changing column headers}
+names(states_medianincome_to2018) <- NULL
+names(states_medianincome_to2018) <- states_medianincome_to2018[1,]
+states_medianincome_to2018
+
+```
+#Selecting only columns with median income from 2011
+```{r Deleting Unnecessary columns}
+states_medianincome_2011to2018 <- states_medianincome_to2018 %>% 
+     select(State,starts_with(c("2"))) %>% 
+        select(-c("2010 (37)":"2000 (30)")) %>% 
+         rename(twentysvtn="2017",twentysvtnt="2017 (40)") %>% 
+          slice(-c(1:3)) %>% 
+             na.omit %>% 
+             slice(-c(52:104)) 
+states_medianincome_2011to2018
+
+
+
+```
+
+#Converting comma separated numeric values to non-comma to enable use of as.numeric
+```{r function to remove a thousand separator from values in approriate columns}
+col_conv <- c(2:11)  
+states_medianincome_2011to2018[ , col_conv] <- lapply(states_medianincome_2011to2018[ , col_conv],function(x){ as.numeric(as.character(gsub(",", "", x))) })
+
+
+
+
+```
+
+
+#Create new columns to replace the other ambiguous columns by taking their averages
+
+```{r }
+smi <- states_medianincome_2011to2018 %>% 
+    mutate("2013" = ((as.numeric(`2013 (38)`) + as.numeric(`2013 (39)`))/2)) %>% 
+    mutate("2017" = ((as.numeric(twentysvtn) + as.numeric(twentysvtnt))/2)) %>% 
+     select(-c(twentysvtnt,twentysvtn,`2013 (38)`,`2013 (39)`))
+smi
+   
+```
+
+```{r loading 2019 & 2020 median income data}
+statesmedianincome_2019 <- read_csv(here::here("Statesmedianincome", "medianstateincome2019.csv"))
+statesmedianincome_2020 <- read_csv(here::here("Statesmedianincome", "medianstateincome_2020.csv"))
+```
+
+```{r wrangling 2019 and 2020 data}
+smi_2019<- statesmedianincome_2019 %>% 
+  rename(State = `Title: Median Annual Household Income | KFF`,"2019"=X2)
+smi_2020 <- statesmedianincome_2020 %>% 
+  rename(State = `Median household income in the United States by state 2020`,"2020" = X2)
+
+smi2019_2020 <- smi_2019 %>% 
+    inner_join(smi_2020, by = "State") 
+
+
+
+```
+
+#Removing dollar sign and a comma from 2019 column
+```{r removing dollar sign and a comma}
+
+smi2019_2020$`2019` = as.numeric(gsub("[\\$,]", "", smi2019_2020$`2019`))
+
+
+```
+
+#Changing District of Colombia to D.C. in 2019/2020 data to enable smooth join
+
+```{r}
+smi2019_2020[10,1] <- "D.C."
+   
+```
+
+
+```{r joining 2011 to 2020 state median income data}
+statesmedianincome_2011to2020 <- smi %>% 
+      inner_join(smi2019_2020, by = "State")
+statesmedianincome_2011to2020
+
+
+```
+
+#ANALYSIS
+#Unemployment rates
+#Values are ranked from smallest to largest
+```{r Averaging over the years for each state and mutating}
+averagestateunemploymentrates_2011to2020 <- statesunemploymentrates_2011to2020 %>% 
+mutate("10year_mean" = (`2011`+`2012`+`2013`+`2014`+`2015`+`2016`+`2017`+`2018`+`2019`+`2020` )/10) 
+  
+```
+
+```{r}
+rankedstateunemploymentrates_2011to2020 <-averagestateunemploymentrates_2011to2020 %>%
+  arrange(`10year_mean`) %>% 
+    mutate('2011_ranking' = min_rank(`2011`) ) %>% 
+    mutate('2012_ranking' = min_rank(`2012`) ) %>% 
+    mutate('2013_ranking' = min_rank(`2013`) ) %>% 
+    mutate('2014_ranking' = min_rank(`2014`) ) %>% 
+    mutate('2015_ranking' = min_rank(`2015`) ) %>% 
+    mutate('2016_ranking' = min_rank(`2016`) ) %>% 
+    mutate('2017_ranking' = min_rank(`2017`) ) %>% 
+    mutate('2018_ranking' = min_rank(`2018`) ) %>% 
+    mutate('2019_ranking' = min_rank(`2019`) ) %>% 
+    mutate('2020_ranking' = min_rank(`2020`) ) %>% 
+    mutate('10year_ranking' = min_rank(`10year_mean`) ) 
+  
+  
+```
+
+
+```{r displaying the rankings only }
+unemploymentrates_ranks <- rankedstateunemploymentrates_2011to2020 %>% 
+     select(States, c(`2011_ranking`:`10year_ranking`))
+unemploymentrates_ranks
+```
+
+#Median income
+#Values are ranked from largest to smallest
+```{r reordering columns }
+statesmedianincome_2011to2020[,order(colnames(statesmedianincome_2011to2020))]
+```
+
+```{r Averaging and ranking states median income}
+averagestatesmedianincome_2011to2020 <- statesmedianincome_2011to2020 %>% 
+mutate("10year_mean" =rowMeans(select(.,`2011`,`2012`,`2013`,`2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`)))
+
+rankedstatesmedianincome_2011to2020 <-averagestatesmedianincome_2011to2020 %>%
+  arrange(desc(`10year_mean`)) %>% 
+    mutate('2011_ranking' = min_rank(desc(`2011`)) ) %>% 
+    mutate('2012_ranking' = min_rank(desc(`2012`) )) %>% 
+    mutate('2013_ranking' = min_rank(desc(`2013`)) ) %>% 
+    mutate('2014_ranking' = min_rank(desc(`2014`)) ) %>% 
+    mutate('2015_ranking' = min_rank(desc(`2015`)) ) %>% 
+    mutate('2016_ranking' = min_rank(desc(`2016`)) ) %>% 
+    mutate('2017_ranking' = min_rank(desc(`2017`)) ) %>% 
+    mutate('2018_ranking' = min_rank(desc(`2018`)) ) %>% 
+    mutate('2019_ranking' = min_rank(desc(`2019`)) ) %>% 
+    mutate('2020_ranking' = min_rank(desc(`2020`)) ) %>% 
+    mutate('10year_ranking' = min_rank(desc(`10year_mean`)) )
+
+medianincome_ranks <- rankedstatesmedianincome_2011to2020%>% 
+     select(State, c(`2011_ranking`:`10year_ranking`))
+medianincome_ranks
+
+```
+
+#Number of hospitals per state
+```{r load population data to be used for analysis}
+statespopulation_2011to2020 <- read_csv("Statespopulation_2011to2020.csv")
+
+
+```
+
+```{r joining hospital and population data}
+hospitals_population <- statehospitals_from2011 %>% 
+    inner_join(statespopulation_2011to2020, by = "States")
+
+#Converting columns to numeric
+hospitals_population[,2:21] <- lapply(hospitals_population[,2:21],as.numeric)
+
+
+```
+
+
+
+```{r hospitals/population}
+
+hospitalsperpopulation <- hospitals_population %>% 
+    mutate("2011_h/p" =`2011.x`/`2011.y`) %>% 
+   mutate("2012_h/p" =`2012.x`/`2012.y`) %>% 
+   mutate("2013_h/p" =`2013.x`/`2013.y`) %>% 
+   mutate("2014_h/p" =`2014.x`/`2014.y`) %>% 
+   mutate("2015_h/p" =`2015.x`/`2015.y`) %>% 
+   mutate("2016_h/p" =`2016.x`/`2016.y`) %>% 
+   mutate("2017_h/p" =`2017.x`/`2017.y`) %>% 
+   mutate("2018_h/p" =`2018.x`/`2018.y`) %>% 
+   mutate("2019_h/p" =`2019.x`/`2019.y`) %>% 
+   mutate("2020_h/p" =`2020.x`/`2020.y`)
+#Selecting only the 'h/p' columns
+
+h_p_data <- hospitalsperpopulation %>% 
+    select(States,c(`2011_h/p`:`2020_h/p`))
+  
+
+
+```
+
+#Rank from the highest value
+
+```{r Averaging and ranking states h/p data}
+averagestatehp_2011to2020 <- h_p_data%>% 
+mutate("10year_mean" =rowMeans(select(.,`2011_h/p`,`2012_h/p`,`2013_h/p`,`2014_h/p`,`2015_h/p`,`2016_h/p`,`2017_h/p`,`2018_h/p`,`2019_h/p`,`2020_h/p`)))
+
+rankedstateshp_2011to2020 <-averagestatehp_2011to2020%>%
+  arrange(desc(`10year_mean`)) %>% 
+    mutate('2011_ranking' =min_rank(desc(`2011_h/p`))) %>% 
+     mutate('2012_ranking' = min_rank(desc(`2012_h/p`) )) %>% 
+    mutate('2013_ranking' = min_rank(desc(`2013_h/p`)) ) %>% 
+    mutate('2014_ranking' = min_rank(desc(`2014_h/p`)) ) %>% 
+    mutate('2015_ranking' = min_rank(desc(`2015_h/p`)) ) %>% 
+    mutate('2016_ranking' = min_rank(desc(`2016_h/p`)) ) %>% 
+    mutate('2017_ranking' = min_rank(desc(`2017_h/p`)) ) %>% 
+    mutate('2018_ranking' = min_rank(desc(`2018_h/p`)) ) %>% 
+    mutate('2019_ranking' = min_rank(desc(`2019_h/p`)) ) %>% 
+    mutate('2020_ranking' = min_rank(desc(`2020_h/p`)) ) %>% 
+    mutate('10year_ranking' = min_rank(desc(`10year_mean`)) )
+
+States_hospitalsperpopulation_ranks <- rankedstateshp_2011to2020%>% 
+     select(States, c(`2011_ranking`:`10year_ranking`))
+States_hospitalsperpopulation_ranks
+ 
+
+```
+
+#Health Insurance 
+```{r joining insurance and population data for analysis}
+insurance_population <- state_hinsurance_from2011 %>% 
+    inner_join(statespopulation_2011to2020, by = "States")
+
+#Converting columns to numeric
+insurance_population[,2:21] <- lapply(insurance_population[,2:21],as.numeric)
+
+```
+
+```{r insurance/population}
+
+insuredperpopulation <- insurance_population %>% 
+    mutate("2011_i/p" =`2011.x`/`2011.y`) %>% 
+   mutate("2012_i/p" =`2012.x`/`2012.y`) %>% 
+   mutate("2013_i/p" =`2013.x`/`2013.y`) %>% 
+   mutate("2014_i/p" =`2014.x`/`2014.y`) %>% 
+   mutate("2015_i/p" =`2015.x`/`2015.y`) %>% 
+   mutate("2016_i/p" =`2016.x`/`2016.y`) %>% 
+   mutate("2017_i/p" =`2017.x`/`2017.y`) %>% 
+   mutate("2018_i/p" =`2018.x`/`2018.y`) %>% 
+   mutate("2019_i/p" =`2019.x`/`2019.y`) %>% 
+   mutate("2020_i/p" =`2020.x`/`2020.y`)
+#Selecting only the 'h/p' columns
+
+h_i_data <- insuredperpopulation %>% 
+    select(States,c(`2011_i/p`:`2020_i/p`))
+  
+```
+
+
+
+
+#Rank from the highest value
+
+```{r Averaging and ranking states i/p data}
+averagestateip_2011to2020 <- h_i_data%>% 
+mutate("10year_mean" =rowMeans(select(.,`2011_i/p`,`2012_i/p`,`2013_i/p`,`2014_i/p`,`2015_i/p`,`2016_i/p`,`2017_i/p`,`2018_i/p`,`2019_i/p`,`2020_i/p`)))
+
+rankedstatesip_2011to2020 <-averagestateip_2011to2020%>%
+  arrange(desc(`10year_mean`)) %>% 
+    mutate('2011_ranking' =min_rank(desc(`2011_i/p`))) %>% 
+     mutate('2012_ranking' = min_rank(desc(`2012_i/p`) )) %>% 
+    mutate('2013_ranking' = min_rank(desc(`2013_i/p`)) ) %>% 
+    mutate('2014_ranking' = min_rank(desc(`2014_i/p`)) ) %>% 
+    mutate('2015_ranking' = min_rank(desc(`2015_i/p`)) ) %>% 
+    mutate('2016_ranking' = min_rank(desc(`2016_i/p`)) ) %>% 
+    mutate('2017_ranking' = min_rank(desc(`2017_i/p`)) ) %>% 
+    mutate('2018_ranking' = min_rank(desc(`2018_i/p`)) ) %>% 
+    mutate('2019_ranking' = min_rank(desc(`2019_i/p`)) ) %>% 
+    mutate('2020_ranking' = min_rank(desc(`2020_i/p`)) ) %>% 
+    mutate('10year_ranking' = min_rank(desc(`10year_mean`)) )
+
+States_insuredperpopulation_ranks <- rankedstatesip_2011to2020%>% 
+     select(States, c(`2011_ranking`:`10year_ranking`))
+States_insuredperpopulation_ranks
+ 
+
+```
+
+
+#Health Overall Ranking 
+
+```{r joining insurance and number of hospitals ranks data }
+
+overall_health_ranking_data <- States_hospitalsperpopulation_ranks %>% 
+           inner_join(States_insuredperpopulation_ranks, by = "States")
+overall_health_ranking_data
+
+ 
+```
+
+
+
+```{r  combining the ranks to get overall ranks for health care access }
+health_weighted_ranks <- overall_health_ranking_data %>% 
+     mutate("2011_weighted_rank"=((0.2 * (`2011_ranking.x`))+(0.8*(`2011_ranking.y`)))/2) %>% 
+     mutate("2012_weighted_rank"=((0.2 * (`2012_ranking.x`))+(0.8*(`2012_ranking.y`)))/2) %>% 
+     mutate("2013_weighted_rank"=((0.2 * (`2013_ranking.x`))+(0.8*(`2013_ranking.y`)))/2) %>% 
+     mutate("2014_weighted_rank"=((0.2 * (`2014_ranking.x`))+(0.8*(`2014_ranking.y`)))/2) %>% 
+     mutate("2015_weighted_rank"=((0.2 * (`2015_ranking.x`))+(0.8*(`2015_ranking.y`)))/2) %>% 
+     mutate("2016_weighted_rank"=((0.2 * (`2016_ranking.x`))+(0.8*(`2016_ranking.y`)))/2) %>% 
+     mutate("2017_weighted_rank"=((0.2 * (`2017_ranking.x`))+(0.8*(`2017_ranking.y`)))/2) %>% 
+     mutate("2018_weighted_rank"=((0.2 * (`2018_ranking.x`))+(0.8*(`2018_ranking.y`)))/2) %>% 
+     mutate("2019_weighted_rank"=((0.2 * (`2019_ranking.x`))+(0.8*(`2019_ranking.y`)))/2) %>% 
+     mutate("2020_weighted_rank"=((0.2 * (`2020_ranking.x`))+(0.8*(`2020_ranking.y`)))/2) %>%              mutate("10yr_weighted_rank"=((0.2 * (`10year_ranking.x`))+(0.8*(`10year_ranking.y`)))/2)
+   
+
+health_ranks_2011to2020 <- health_weighted_ranks %>% 
+  mutate("2011_overall_hrank" = min_rank(`2011_weighted_rank`)) %>% 
+  mutate("2012_overall_hrank" = min_rank(`2012_weighted_rank`)) %>% 
+   mutate("2013_overall_hrank" = min_rank(`2013_weighted_rank`)) %>% 
+   mutate("2014_overall_hrank" = min_rank(`2014_weighted_rank`)) %>% 
+   mutate("2015_overall_hrank" = min_rank(`2015_weighted_rank`)) %>% 
+    mutate("2016_overall_hrank" = min_rank(`2016_weighted_rank`)) %>% 
+   mutate("2017_overall_hrank" = min_rank(`2017_weighted_rank`)) %>% 
+   mutate("2018_overall_hrank" = min_rank(`2018_weighted_rank`)) %>% 
+   mutate("2019_overall_hrank" = min_rank(`2019_weighted_rank`)) %>% 
+   mutate("2020_overall_hrank" = min_rank(`2020_weighted_rank`)) %>% 
+   mutate("10yr_overall_hrank" = min_rank(`10yr_weighted_rank`)) 
+   
+  
+health_ranks2011to2020 <- health_ranks_2011to2020 %>% 
+  arrange(`10yr_overall_hrank`) %>% 
+      select(States, c(`2011_overall_hrank`:`10yr_overall_hrank`)) 
+ health_ranks2011to2020
+    
+      
+     
+    
+
+
+```
+
+
+
+
+
+
+```{r renaming some columns and rows for effective join}
+medianincome_ranks <-  medianincome_ranks %>% 
+     rename(States = State)
+
+
+medianincome_ranks[3,1] <- "District of Columbia"
+
+
+```
+
+
+
+
+
+```{r combining unemployment ranks and medianincome ranks}
+
+
+overall_economics_ranking_data <- unemploymentrates_ranks %>% 
+          inner_join(medianincome_ranks, by = "States")
+overall_economics_ranking_data
+
+
+
+
+```
+
+
+
+
+
+```{r  combining the ranks to get overall ranks for economics }
+economics_weighted_ranks <- overall_economics_ranking_data %>% 
+     mutate("2011_weighted_rank"=((0.6 * (`2011_ranking.x`))+(0.4*(`2011_ranking.y`)))/2) %>% 
+     mutate("2012_weighted_rank"=((0.6 * (`2012_ranking.x`))+(0.4*(`2012_ranking.y`)))/2) %>% 
+     mutate("2013_weighted_rank"=((0.6 * (`2013_ranking.x`))+(0.4*(`2013_ranking.y`)))/2) %>% 
+     mutate("2014_weighted_rank"=((0.6 * (`2014_ranking.x`))+(0.4*(`2014_ranking.y`)))/2) %>% 
+     mutate("2015_weighted_rank"=((0.6 * (`2015_ranking.x`))+(0.4*(`2015_ranking.y`)))/2) %>% 
+     mutate("2016_weighted_rank"=((0.6 * (`2016_ranking.x`))+(0.4*(`2016_ranking.y`)))/2) %>% 
+     mutate("2017_weighted_rank"=((0.6 * (`2017_ranking.x`))+(0.4*(`2017_ranking.y`)))/2) %>% 
+     mutate("2018_weighted_rank"=((0.6 * (`2018_ranking.x`))+(0.4*(`2018_ranking.y`)))/2) %>% 
+     mutate("2019_weighted_rank"=((0.6 * (`2019_ranking.x`))+(0.4*(`2019_ranking.y`)))/2) %>% 
+     mutate("2020_weighted_rank"=((0.6 * (`2020_ranking.x`))+(0.4*(`2020_ranking.y`)))/2) %>%              mutate("10yr_weighted_rank"=((0.6 * (`10year_ranking.x`))+(0.4*(`10year_ranking.y`)))/2)
+   
+
+economics_ranks_2011to2020 <- economics_weighted_ranks %>% 
+  mutate("2011_overall_erank" = min_rank(`2011_weighted_rank`)) %>% 
+  mutate("2012_overall_erank" = min_rank(`2012_weighted_rank`)) %>% 
+   mutate("2013_overall_erank" = min_rank(`2013_weighted_rank`)) %>% 
+   mutate("2014_overall_erank" = min_rank(`2014_weighted_rank`)) %>% 
+   mutate("2015_overall_erank" = min_rank(`2015_weighted_rank`)) %>% 
+    mutate("2016_overall_erank" = min_rank(`2016_weighted_rank`)) %>% 
+   mutate("2017_overall_erank" = min_rank(`2017_weighted_rank`)) %>% 
+   mutate("2018_overall_erank" = min_rank(`2018_weighted_rank`)) %>% 
+   mutate("2019_overall_erank" = min_rank(`2019_weighted_rank`)) %>% 
+   mutate("2020_overall_erank" = min_rank(`2020_weighted_rank`)) %>% 
+   mutate("10yr_overall_erank" = min_rank(`10yr_weighted_rank`)) 
+   
+  
+economics_ranks2011to2020 <- economics_ranks_2011to2020 %>% 
+  arrange(`10yr_overall_erank`) %>% 
+      select(States, c(`2011_overall_erank`:`10yr_overall_erank`)) 
+ 
+    
+      
+     
+economics_ranks2011to2020
+
+
+```
+
+
+```{r Health, Economics ranking combined}
+
+Factor_rankings_combined <- economics_ranks2011to2020 %>% 
+  inner_join(health_ranks2011to2020, by ="States") 
+
+    
+
+
+```
+
+
+
+```{r Calculating overall ranks for all factors combined}
+Final_rankings <- Factor_rankings_combined %>% 
+   mutate("2011" = (`2011_overall_erank`+`2011_overall_hrank`)/2) %>% 
+     mutate("2012" = (`2012_overall_erank`+`2012_overall_hrank`)/2) %>% 
+     mutate("2013" = (`2013_overall_erank`+`2013_overall_hrank`)/2) %>% 
+     mutate("2014" = (`2014_overall_erank`+`2014_overall_hrank`)/2) %>% 
+     mutate("2015" = (`2015_overall_erank`+`2015_overall_hrank`)/2) %>% 
+     mutate("2016" = (`2016_overall_erank`+`2016_overall_hrank`)/2) %>% 
+     mutate("2017" = (`2017_overall_erank`+`2017_overall_hrank`)/2) %>% 
+     mutate("2018" = (`2018_overall_erank`+`2018_overall_hrank`)/2) %>% 
+     mutate("2019" = (`2019_overall_erank`+`2019_overall_hrank`)/2) %>% 
+     mutate("2020" = (`2020_overall_erank`+`2020_overall_hrank`)/2) %>% 
+     mutate("10_yr" = (`10yr_overall_erank`+`10yr_overall_hrank`)/2)  
+  
+
+Final_rankings
+
+
+```
+
+
+
+
