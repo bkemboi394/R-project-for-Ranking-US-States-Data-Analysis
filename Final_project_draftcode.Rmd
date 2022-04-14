@@ -697,6 +697,9 @@ economics_ranks2011to2020
 
 ```{r Health, Economics ranking combined}
 
+
+
+
 Factor_rankings_combined <- economics_ranks2011to2020 %>% 
   inner_join(health_ranks2011to2020, by ="States") 
 
@@ -724,6 +727,12 @@ Final_rankings <- Factor_rankings_combined %>%
 
 Final_rankings
 
+
+```
+
+
+
+```{r}
 
 ```
 

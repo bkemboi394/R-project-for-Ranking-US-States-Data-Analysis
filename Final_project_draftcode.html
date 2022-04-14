@@ -1001,6 +1001,11 @@ medianincome_ranks</code></pre>
 ##   `2019` = col_double(),
 ##   `2020` = col_double()
 ## )</code></pre>
+<pre><code>## Warning: 3 parsing failures.
+## row col   expected    actual                              file
+##  83  -- 11 columns 1 columns &#39;Statespopulation_2011to2020.csv&#39;
+##  96  -- 11 columns 1 columns &#39;Statespopulation_2011to2020.csv&#39;
+## 109  -- 11 columns 1 columns &#39;Statespopulation_2011to2020.csv&#39;</code></pre>
 <pre class="r"><code>hospitals_population &lt;- statehospitals_from2011 %&gt;% 
     inner_join(statespopulation_2011to2020, by = &quot;States&quot;)
 

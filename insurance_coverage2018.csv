@@ -1,0 +1,86 @@
+﻿Title: Health Insurance Coverage of the Total Population (CPS) | KFF,,,,,,,
+Timeframe: 2018,,,,,,,
+Location,Employer,Non-Group,Medicaid,Medicare,Military,Uninsured,Total
+United States,164241800,18692300,57819000,48717100,6735900,27462300,323668400
+Alabama,2333000,237500,833800,809000,186900,458900,4859100
+Alaska,335700,20500,148600,78300,52900,84900,721000
+Arizona,3418300,417800,1562800,1102100,163000,564000,7227900
+Arkansas,1245200,192400,644900,503900,87200,238800,2912400
+California,18679900,2609200,9322300,5050100,552000,2935400,39148800
+Colorado,3221000,362000,646700,834300,169200,501100,5734300
+Connecticut,1753800,160400,715000,549500,N/A,172100,3417400
+Delaware,503300,40000,171800,171200,25500,62300,974200
+District of Columbia,379200,41000,159500,68800,N/A,31700,690800
+Florida,8468500,1985500,3122100,4009600,550500,2992300,21128500
+Georgia,4746600,652100,1734300,1429600,409500,1450000,10422100
+Hawaii,732700,41300,230400,248100,93800,46400,1392700
+Idaho,876100,155700,253300,265000,28600,181500,1760300
+Illinois,7244100,677900,1969600,1786300,124900,766900,12569700
+Indiana,3674800,175900,1163900,939400,114600,502600,6571200
+Iowa,1732900,208100,503100,474000,N/A,139400,3111600
+Kansas,1628900,167100,296200,468200,N/A,220000,2835500
+Kentucky,2014800,169900,1053200,821600,126500,250100,4436100
+Louisiana,1949100,166200,1208100,681700,132000,366200,4503200
+Maine,649500,91400,211700,252400,N/A,95200,1322200
+Maryland,3551700,369800,798200,711100,187800,413600,6032200
+Massachusetts,4011600,384500,1340400,956600,N/A,163800,6877400
+Michigan,5599100,412300,1692700,1620500,N/A,506100,9922600
+Minnesota,3336900,285600,962800,825200,98300,216600,5725500
+Mississippi,1215800,146400,636700,468200,78300,357200,2902500
+Missouri,3318300,359600,833300,1069900,N/A,361900,6008500
+Montana,475200,75200,196800,207900,26500,58500,1040200
+Nebraska,1085600,124800,233700,264200,43000,135200,1886600
+Nevada,1652500,136300,453500,471100,50900,249200,3013600
+New Hampshire,790700,70500,156800,229100,27400,71600,1346100
+New Jersey,5166700,544000,1275800,1287000,N/A,478300,8783900
+New Mexico,768600,66400,594200,354300,67200,204500,2055300
+New York,9423100,1123100,4842800,2728600,N/A,1017300,19351900
+North Carolina,5082000,662500,1517400,1672000,N/A,998700,10343700
+North Dakota,465900,39000,74000,108100,17600,38200,742800
+Ohio,6451400,428000,2159300,1755700,74800,566700,11436000
+Oklahoma,1746100,180900,605500,651700,82300,602700,3869200
+Oregon,2079800,237700,791800,745300,60100,269000,4183600
+Pennsylvania,6773000,601800,2240200,2081300,90400,728100,12514900
+Rhode Island,533600,62300,214200,167900,N/A,38100,1035000
+South Carolina,2547700,333800,661500,930200,140600,423100,5036900
+South Dakota,458600,50900,116700,131600,19300,74100,851300
+Tennessee,3411000,417200,1036700,1094000,N/A,484600,6676300
+Texas,13671100,1527300,4194800,3435800,723700,4908900,28461600
+Utah,1899400,253300,292200,348200,55800,319900,3168900
+Vermont,315200,32600,118900,116300,N/A,27800,617500
+Virginia,4382600,367500,1028500,1350600,516000,733300,8378500
+Washington,4049900,495200,1380900,972300,153200,490300,7541800
+West Virginia,780600,41200,461500,343800,N/A,106000,1764000
+Wisconsin,3308700,257900,896100,982100,N/A,296900,5796800
+Wyoming,302000,32600,59800,93400,14600,62100,564400
+,,,,,,,
+Notes,,,,,,,
+"For 2020, the majority of our health coverage topics are based on analysis of the Census Bureau’s March Supplement to the Current Population Survey (the CPS Annual Social and Economic Supplement or ASEC). Previously, our source for these data was the Census Bureau’s American Community Survey (ACS); however, release of the ACS data has been delayed due to the coronavirus pandemic.  Although health coverage and population estimates using ACS are still available for 2008-2019, the 2020 data from CPS cannot be compared to prior year estimates from ACS. Due to known data quality issues with the 2019 CPS ASEC data, which was collected in March 2020 just at the onset of the pandemic and experienced low response rates, we have chosen not to report the 2019 data. We provide trend data for 2016, 2018, and 2020 using the CPS.",,,,,,,
+,,,,,,,
+"In this analysis, income (mostly categorized as a percent of the federal poverty level) is aggregated by Census-defined family units. Analyzing income by family unit captures income available to a group of people who are likely sharing resources. However, family units may not be the appropriate measure for capturing eligibility for health insurance. Eligibility for health insurance is more accurately estimated using ""health insurance units,"" which may be counted differently for different types of insurance (such as Medicaid or employer coverage).",,,,,,,
+,,,,,,,
+Data exclude a small number of people with private coverage of an unknown source. Data may not sum to totals due to rounding and the exclusion of these people.,,,,,,,
+,,,,,,,
+Data may not sum to totals due to rounding.,,,,,,,
+,,,,,,,
+Sources,,,,,,,
+"KFF estimates based on the Census Bureau's March Current Population Survey (CPS: Annual Social and Economic Supplements), 2017-2021.",,,,,,,
+,,,,,,,
+Definitions,,,,,,,
+"The ASEC asks respondents about their health insurance coverage throughout the previous calendar year. Respondents may report having more than one type of coverage. In this analysis, individuals are sorted into only one category of insurance coverage using the following hierarchy:",,,,,,,
+,,,,,,,
+"*Medicaid*: Includes those covered by Medicaid, the Children’s Health Insurance Program (CHIP), and those who have both Medicaid and another type of coverage, such as dual eligibles who are also covered by Medicare.",,,,,,,
+,,,,,,,
+"*Medicare*: Includes those covered by Medicare, Medicare Advantage, and those who have Medicare and another type of non-Medicaid coverage where Medicare is the primary payer. Excludes those with Medicare Part A coverage only and those covered by Medicare and Medicaid (dual eligibles).",,,,,,,
+,,,,,,,
+*Employer*: Includes those covered by employer-sponsored coverage either through their own job or as a dependent in the same household.,,,,,,,
+,,,,,,,
+*Other Public*: Includes those covered under the military or Veterans Administration.,,,,,,,
+,,,,,,,
+*Non-Group*: Includes individuals and families that purchased or are covered as a dependent by non-group insurance.,,,,,,,
+,,,,,,,
+*Uninsured*: Includes those without health insurance and those who have coverage under the Indian Health Service only.,,,,,,,
+,,,,,,,
+"For example, a person having Medicaid coverage in the first half of the year but employer-based coverage in the last months of the year would be categorized as having Medicaid coverage in this analysis.",,,,,,,
+,,,,,,,
+*N/A*: Estimates with relative standard errors greater than 30% are not provided.,,,,,,,
