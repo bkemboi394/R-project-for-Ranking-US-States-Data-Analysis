@@ -81,6 +81,7 @@ Sources,,,,,,,,,,
 Definitions,,,,,,,,,,
 "The ACS asks respondents about their health insurance coverage throughout the previous calendar year. Respondents may report having more than one type of coverage. In this analysis, individuals are sorted into only one category of insurance coverage using the following hierarchy:",,,,,,,,,,
 ,,,,,,,,,,
+<<<<<<< HEAD
 "*Medicaid*: Includes those covered by Medicaid, Medical Assistance, Children's Health Insurance Plan (CHIP) or any kind of government-assistance plan for those with low incomes or a disability, as well as those who have both Medicaid and another type of coverage, such as dual eligibles who are also covered by Medicare.",,,,,,,,,,
 "",,,,,,,,,,
 "*Medicare*:  Includes those covered by Medicare, Medicare Advantage, and those who have Medicare and another type of non-Medicaid coverage where Medicare appears to be the primary payer. Excludes seniors who also report employer-sponsored coverage and full-time work, and those covered by Medicare and Medicaid (dual eligibles).",,,,,,,,,,
@@ -93,6 +94,32 @@ Definitions,,,,,,,,,,
 "",,,,,,,,,,
 "*Uninsured*: Includes those without health insurance and those who have coverage under the Indian Health Service only.",,,,,,,,,,
 "",,,,,,,,,,
+=======
+"*Medicaid*: Includes those covered by Medicaid, Medical Assistance, Children's Health Insurance Plan (CHIP) or any kind of government-assistance plan for those with low incomes or a disability, as well as those who have both Medicaid and another type of coverage, such as dual eligibles who are also covered by Medicare.
+",,,,,,,,,,
+"
+",,,,,,,,,,
+"*Medicare*:  Includes those covered by Medicare, Medicare Advantage, and those who have Medicare and another type of non-Medicaid coverage where Medicare appears to be the primary payer. Excludes seniors who also report employer-sponsored coverage and full-time work, and those covered by Medicare and Medicaid (dual eligibles).
+",,,,,,,,,,
+"
+",,,,,,,,,,
+"*Employer*: Includes those covered through a current or former employer or union, either as policyholder or as dependent
+",,,,,,,,,,
+"
+",,,,,,,,,,
+"*Military*: Includes those covered under the military or Veterans Administration
+",,,,,,,,,,
+"
+",,,,,,,,,,
+"*Non-Group*: Includes those covered by a policy purchased directly from an insurance company, etiher as policyholder or as dependent
+",,,,,,,,,,
+"
+",,,,,,,,,,
+"*Uninsured*: Includes those without health insurance and those who have coverage under the Indian Health Service only.
+",,,,,,,,,,
+"
+",,,,,,,,,,
+>>>>>>> 3bd3413abba8324cbea76b884f55dde99e7e430c
 *N/A*: Estimates with relative standard errors greater than 30% are not provided.,,,,,,,,,,
 ,,,,,,,,,,
 ,,,,,,,,,,
