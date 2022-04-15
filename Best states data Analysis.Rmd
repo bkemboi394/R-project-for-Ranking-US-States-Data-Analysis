@@ -47,6 +47,14 @@ pivot_wider(names_from = Year, values_from = International_Roughness_Index)
 final_road_data1
 ```
 
+# replacing NA cell
+
+```{r}
+final_road_data1 [22, 8] = 0.634656894
+
+   
+```
+
 
 # Deleting unwanted columns using dplyr select
 # using mutate to get the sum and average
@@ -134,7 +142,7 @@ elec_tenyear_mean
 
 ```
 
-```{r, using mutate to get mean per year}
+```{r, using mutate to get mean_per year}
 elec_meandata_2011to2020 <- elec_tenyear_mean %>%
 arrange(desc(`10year_mean`)) %>% 
 mutate('2011_ranking' =min_rank(desc(`2011`))) %>% 
@@ -191,7 +199,7 @@ data_correction2 <- data_correction %>%
 slice(-c(56:735)) %>%
 slice(-c(2:4)) %>%
 rename(State = 1) %>%
-separate(State, c("state"), extra = 'drop') %>%
+separate(State, into = "States", sep = "/", extra = 'drop') %>%
 select (-c(2:35)) %>%
 purrr::set_names(as.character(slice(., 1))) %>%
 slice(-1)
@@ -204,9 +212,9 @@ data_correction2
 
 ```{r}
 final_data_correction <- data_correction2 %>%
-rename(State = 1) %>%
-mutate(sum = rowSums(across(where(is.numeric)))) %>%
-mutate(average = round((sum / 9), digits = 2))
+rename(State = 1)
+
+
 
 final_data_correction
 
@@ -224,7 +232,10 @@ population
 # rename column 1
 ```{r}
 renamed_population <- population %>%
-rename(State = 1)
+rename(State = 1) %>%
+slice(1:51)%>%
+select(-c(11))
+
 renamed_population
 
 ```
@@ -232,7 +243,7 @@ renamed_population
 # inner join 
 
 ```{r, add the population data to the data correction data}
-combined_correction <- merge(x = final_data_correction, y = renamed_population, by = "State" )
+combined_correction <- left_join(x = final_data_correction, y = renamed_population, by = "State" )
 
 combined_correction
 
@@ -285,9 +296,24 @@ ranked_correction_data
 # ranked correction data
 ```{r}
 final_ranked_correction <- ranked_correction_data %>%
-select(State, 12:20)
+select(State, 12:21)
 
 final_ranked_correction
+```
+ # renaming columns
+ 
+```{r}
+final_ranked_correction2 <- final_ranked_correction %>%
+rename("2011_corrank" = 2)%>%
+rename("2012_corrank" = 3)%>%
+rename("2013_corrank" = 4)%>%
+rename("2014_corrank" = 5)%>%
+rename("2015_corrank" = 6)%>%
+rename("2016_corrank" = 7)%>%
+rename("2017_corrank" = 8)%>%
+rename("2018_corrank" = 9)%>%
+rename("2019_corrank" = 10)%>%
+rename("10yr_corrank" = 11)
 ```
 
  
@@ -376,19 +402,19 @@ nineyear_graduation
 ```
 # ranked_correction_data
 
-```{r, ranked_correction_data}
+```{r, ranked_graduation_data}
 ranked_graduation_data <- nineyear_graduation %>%
 arrange(desc(`10year_mean`)) %>% 
-mutate('2011_ranking' =min_rank(desc(`2011`))) %>% 
-mutate('2012_ranking' = min_rank(desc(`2012`) )) %>% 
-mutate('2013_ranking' = min_rank(desc(`2013`)) ) %>% 
-mutate('2014_ranking' = min_rank(desc(`2014`)) ) %>% 
-mutate('2015_ranking' = min_rank(desc(`2015`)) ) %>% 
-mutate('2016_ranking' = min_rank(desc(`2016`)) ) %>% 
-mutate('2017_ranking' = min_rank(desc(`2017`)) ) %>% 
-mutate('2018_ranking' = min_rank(desc(`2018`)) ) %>% 
-mutate('2019_ranking' = min_rank(desc(`2019`)) ) %>% 
-mutate('10year_ranking' = min_rank(desc(`10year_mean`)) )
+mutate('2011_edurank' =min_rank(desc(`2011`))) %>% 
+mutate('2012_edurank' = min_rank(desc(`2012`) )) %>% 
+mutate('2013_edurank' = min_rank(desc(`2013`)) ) %>% 
+mutate('2014_edurank' = min_rank(desc(`2014`)) ) %>% 
+mutate('2015_edurank' = min_rank(desc(`2015`)) ) %>% 
+mutate('2016_edurank' = min_rank(desc(`2016`)) ) %>% 
+mutate('2017_edurank' = min_rank(desc(`2017`)) ) %>% 
+mutate('2018_edurank' = min_rank(desc(`2018`)) ) %>% 
+mutate('2019_edurank' = min_rank(desc(`2019`)) ) %>% 
+mutate('10year_edurank' = min_rank(desc(`10year_mean`)) )
 
 ranked_graduation_data
 
