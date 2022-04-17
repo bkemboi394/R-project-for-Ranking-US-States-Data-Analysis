@@ -1,6 +1,6 @@
 ---
 title: "finalproject_codedraft"
-author: "Beatrice"
+author: "Beatrice & Moreen"
 date: "4/6/2022"
 output: html_document
 ---
@@ -18,6 +18,386 @@ library(tidyverse)
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## R loading data on infrastructure: 
+## metric Road quality
+
+```{r, `read_data`}
+road_quality_data <- read_csv("road_quality_data.csv")
+road_quality_data
+
+```
+
+
+## filtering out unwanted rows
+## renaming the states
+## select the required columns
+
+```{r, wrangling and renaming }
+wrangled_data_roads <- road_quality_data %>% 
+filter(grepl('Percent Acceptable', Class))%>%
+rename(International_Roughness_Index = Value) %>%
+select(Year,State,International_Roughness_Index ) 
+
+
+wrangled_data_roads
+
+```
+
+
+#  Using pivot wider to tidy the data
+
+```{r, pivot_wider}
+final_road_data1 <- wrangled_data_roads %>%
+pivot_wider(names_from = Year, values_from = International_Roughness_Index)
+
+final_road_data1
+```
+
+# replacing NA cell
+
+```{r}
+final_road_data1 [22, 8] = 0.634656894
+
+   
+```
+
+
+# Deleting unwanted columns using dplyr select
+# using mutate to get the sum and average
+
+```{r, using mutate to get 10yr mean}
+ten_year_roadmean <- final_road_data1 %>%
+select(-c(12:19)) %>%
+mutate("10year_mean" =rowMeans(select(.,`2011`,`2012`,`2013`,`2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`)))
+
+ten_year_roadmean
+
+```
+
+
+```{r, using mutate to get mean per year}
+rankedroad_data_2011to2020 <-ten_year_roadmean %>%
+arrange(desc(`10year_mean`)) %>% 
+mutate('2011_ranking' =min_rank(desc(`2011`))) %>% 
+mutate('2012_ranking' = min_rank(desc(`2012`) )) %>% 
+mutate('2013_ranking' = min_rank(desc(`2013`)) ) %>% 
+mutate('2014_ranking' = min_rank(desc(`2014`)) ) %>% 
+mutate('2015_ranking' = min_rank(desc(`2015`)) ) %>% 
+mutate('2016_ranking' = min_rank(desc(`2016`)) ) %>% 
+mutate('2017_ranking' = min_rank(desc(`2017`)) ) %>% 
+mutate('2018_ranking' = min_rank(desc(`2018`)) ) %>% 
+mutate('2019_ranking' = min_rank(desc(`2019`)) ) %>% 
+mutate('2020_ranking' = min_rank(desc(`2020`)) ) %>% 
+mutate('10year_ranking' = min_rank(desc(`10year_mean`)) )
+
+rankedroad_data_2011to2020 
+
+```
+
+# summary of states and their ranks
+
+```{r, summary state and rank}
+roadrank_summary <- rankedroad_data_2011to2020  %>% 
+select(State, c(`2011_ranking`:`10year_ranking`))
+
+roadrank_summary
+
+```
+
+# Importing electricity prices per state
+
+```{r, read electricity price data}
+electricity_price_state <- read_csv("state_electricity_price.csv")
+
+electricity_price_state
+
+```
+
+
+# data wrangling to clean up the data
+# separating date column into year,month,day
+# making the tibble wider
+# splitting the date column into year, month, date
+
+
+```{r, tidying electricity price data}
+electricity_price <- electricity_price_state %>%
+separate(date, into = c("year", "month","date"), sep = "-")%>%
+select(-c(3:4)) %>%
+pivot_wider(names_from = year, values_from = value )
+
+
+   
+electricity_price
+```
+
+# deleting unwanted rows
+```{r}
+final_electricity_price1 <- electricity_price %>%
+select(-c(2:11, 22)) 
+
+final_electricity_price1
+
+```
+
+```{r,  electricity price 10 year mean }
+elec_tenyear_mean <- final_electricity_price1 %>%
+mutate("10year_mean" =rowMeans(select(.,`2011`,`2012`,`2013`,`2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`)))
+
+elec_tenyear_mean
+
+```
+
+```{r, using mutate to get mean_per year}
+elec_meandata_2011to2020 <- elec_tenyear_mean %>%
+arrange((`10year_mean`)) %>% 
+mutate('2011_ranking' =min_rank((`2011`))) %>% 
+mutate('2012_ranking' = min_rank((`2012`) )) %>% 
+mutate('2013_ranking' = min_rank((`2013`)) ) %>% 
+mutate('2014_ranking' = min_rank((`2014`)) ) %>% 
+mutate('2015_ranking' = min_rank((`2015`)) ) %>% 
+mutate('2016_ranking' = min_rank((`2016`)) ) %>% 
+mutate('2017_ranking' = min_rank((`2017`)) ) %>% 
+mutate('2018_ranking' = min_rank((`2018`)) ) %>% 
+mutate('2019_ranking' = min_rank((`2019`)) ) %>% 
+mutate('2020_ranking' = min_rank((`2020`)) ) %>% 
+mutate('10year_ranking' = min_rank((`10year_mean`)) )
+
+elec_meandata_2011to2020
+
+```
+
+# summary of state and rankings 2011-2020
+
+```{r}
+elecprice_rank <- elec_meandata_2011to2020 %>% 
+select(state, c(`2011_ranking`:`10year_ranking`))
+
+elecprice_rank
+
+```
+
+
+
+# Crime rate data
+
+```{r, reading_crime_data}
+Corrections_data <- read_csv("Corrections data.csv")
+
+Corrections_data
+```
+
+
+```{r, deleting_columns}
+data_correction <- Corrections_data %>%
+slice(-c(1:7)) 
+
+
+data_correction
+``` 
+# continuing data deletion
+# Rename the name of coloumn 1
+# Separate coloumn 1 
+# using the first row as the header
+
+```{r}
+data_correction2 <- data_correction %>%
+slice(-c(56:735)) %>%
+slice(-c(2:4)) %>%
+rename(State = 1) %>%
+separate(State, into = "States", sep = "/", extra = 'drop') %>%
+select (-c(2:35)) %>%
+purrr::set_names(as.character(slice(., 1))) %>%
+slice(-1)
+
+
+data_correction2
+
+```
+
+
+```{r}
+final_data_correction <- data_correction2 %>%
+rename(State = 1)
+
+
+
+final_data_correction
+
+```
+
+
+# loading data on population 
+
+```{r, loading data on population}
+population <- read_csv("Statespopulation_2011to2020.csv") 
+
+population
+
+```
+# rename column 1
+```{r}
+renamed_population <- population %>%
+rename(State = 1) %>%
+slice(1:51)%>%
+select(-c(11))
+
+renamed_population
+
+```
+
+# inner join 
+
+```{r, add the population data to the data correction data}
+combined_correction <- left_join(x = final_data_correction, y = renamed_population, by = "State" )
+
+combined_correction
+
+```
+# deleting unwanted columns in the combined data
+```{r, deleting unwanted columns}
+data_combined_correction <- combined_correction %>%
+mutate(correction_2011 = `2011.x`/`2011.y`,
+       correction_2012 = `2012.x` /`2012.y`,
+       correction_2013 = `2013.x`/`2013.y`,
+       correction_2014 = `2014.x` /`2014.y`,
+       correction_2015 = `2015.x`/`2015.y`,
+       correction_2016 = `2016.x` /`2016.y`,
+       correction_2017 = `2017.x`/`2017.y`,
+       correction_2018 = `2018.x`/`2018.y`,
+       correction_2019 = `2019.x` /`2019.y`
+)
+       
+data_combined_correction      
+
+```
+# selecting the correction rate per state
+
+```{r, using select to select the correction data }
+combined_correction_data <- data_combined_correction %>%
+select(State,correction_2011:correction_2019) %>%
+mutate("10year_mean" =rowMeans(select(.,`correction_2011`,`correction_2012`,`correction_2013`,`correction_2014`,`correction_2015`,`correction_2016`,`correction_2017`,`correction_2018`,`correction_2019`)))
+
+combined_correction_data
+```
+# ranked correction data
+
+```{r, ranked_correction_data}
+ranked_correction_data <- combined_correction_data %>%
+arrange(desc(`10year_mean`)) %>% 
+mutate('2011_ranking' =min_rank((`correction_2011`))) %>% 
+mutate('2012_ranking' = min_rank((`correction_2012`) )) %>% 
+mutate('2013_ranking' = min_rank((`correction_2013`)) ) %>% 
+mutate('2014_ranking' = min_rank((`correction_2014`)) ) %>% 
+mutate('2015_ranking' = min_rank((`correction_2015`)) ) %>% 
+mutate('2016_ranking' = min_rank((`correction_2016`)) ) %>% 
+mutate('2017_ranking' = min_rank((`correction_2017`)) ) %>% 
+mutate('2018_ranking' = min_rank((`correction_2018`)) ) %>% 
+mutate('2019_ranking' = min_rank((`correction_2019`)) ) %>% 
+mutate('10year_ranking' = min_rank((`10year_mean`)) )
+
+ranked_correction_data
+```
+
+# ranked correction data
+```{r}
+final_ranked_correction <- ranked_correction_data %>%
+select(State, 12:21)
+
+final_ranked_correction
+```
+ # renaming columns
+ 
+```{r}
+final_ranked_correction2 <- final_ranked_correction %>%
+rename("2011_corrank" = 2)%>%
+rename("2012_corrank" = 3)%>%
+rename("2013_corrank" = 4)%>%
+rename("2014_corrank" = 5)%>%
+rename("2015_corrank" = 6)%>%
+rename("2016_corrank" = 7)%>%
+rename("2017_corrank" = 8)%>%
+rename("2018_corrank" = 9)%>%
+rename("2019_corrank" = 10)%>%
+rename("10yr_corrank" = 11)
+```
+
+ 
+
+# EDUCATION DATA
+#load data
+
+
+```{r College graduation rate data}
+college_graduationrate_data <- read_csv("College_Graduation_Rate_perstate.csv")
+col_conv <- c(5:11)  
+college_graduationrate_data[ , col_conv] <- lapply(college_graduationrate_data[ , col_conv],function(x){ as.numeric(as.character(gsub("%", "", x))) })
+
+college_graduationrate_data
+
+
+
+```
+
+
+
+
+
+
+
+# Ranking the average graduation rate over the years
+ 
+```{r, 10year graduation rate mean}
+#graduation_rate2[,2:10] <- lapply(graduation_rate2[,2:10],as.numeric)
+
+tenyear_graduation <- college_graduationrate_data %>%
+mutate("10year_mean" =rowMeans(select(., `2011`,`2012`,`2013`,`2014`,`2015`,`2016`,`2017`,`2018`,`2019`, `2020`))
+)
+tenyear_graduation
+```
+# ranked_correction_data
+
+```{r, ranked_graduation_data}
+ranked_graduation_data <- tenyear_graduation %>%
+arrange(desc(`10year_mean`)) %>% 
+mutate('2011_edurank' =min_rank(desc(`2011`))) %>% 
+mutate('2012_edurank' = min_rank(desc(`2012`) )) %>% 
+mutate('2013_edurank' = min_rank(desc(`2013`)) ) %>% 
+mutate('2014_edurank' = min_rank(desc(`2014`)) ) %>% 
+mutate('2015_edurank' = min_rank(desc(`2015`)) ) %>% 
+mutate('2016_edurank' = min_rank(desc(`2016`)) ) %>% 
+mutate('2017_edurank' = min_rank(desc(`2017`)) ) %>% 
+mutate('2018_edurank' = min_rank(desc(`2018`)) ) %>% 
+mutate('2019_edurank' = min_rank(desc(`2019`)) ) %>% 
+mutate('2020_edurank' = min_rank(desc(`2020`)) ) %>%  
+mutate('10year_edurank' = min_rank(desc(`10year_mean`)) )
+
+ranked_graduation_data
+
+```
+
+# final_ranked_data
+
+```{r}
+final_ranked_graduation <- ranked_graduation_data %>%
+select(States, 13:23)
+
+final_ranked_graduation
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r load & wrangling hospitals data}
 th2011 <- read_csv("totalhospitals2011.csv")
@@ -131,6 +511,7 @@ rename(States= `Title: Health Insurance Coverage of the Total Population (CPS) |
 ```
 
 #Insurance entities considered are employer, non-group,medicare,medicaid, and military
+
 
 ```{r subsetting and joining health insurance data}
 hi_2011 <- hinsurance_2011 %>% 
@@ -590,7 +971,8 @@ health_weighted_ranks <- overall_health_ranking_data %>%
      mutate("2017_weighted_rank"=((0.2 * (`2017_ranking.x`))+(0.8*(`2017_ranking.y`)))/2) %>% 
      mutate("2018_weighted_rank"=((0.2 * (`2018_ranking.x`))+(0.8*(`2018_ranking.y`)))/2) %>% 
      mutate("2019_weighted_rank"=((0.2 * (`2019_ranking.x`))+(0.8*(`2019_ranking.y`)))/2) %>% 
-     mutate("2020_weighted_rank"=((0.2 * (`2020_ranking.x`))+(0.8*(`2020_ranking.y`)))/2) %>%              mutate("10yr_weighted_rank"=((0.2 * (`10year_ranking.x`))+(0.8*(`10year_ranking.y`)))/2)
+     mutate("2020_weighted_rank"=((0.2 * (`2020_ranking.x`))+(0.8*(`2020_ranking.y`)))/2) %>%              
+     mutate("10yr_weighted_rank"=((0.2 * (`10year_ranking.x`))+(0.8*(`10year_ranking.y`)))/2)
    
 
 health_ranks_2011to2020 <- health_weighted_ranks %>% 
@@ -656,16 +1038,17 @@ overall_economics_ranking_data
 
 ```{r  combining the ranks to get overall ranks for economics }
 economics_weighted_ranks <- overall_economics_ranking_data %>% 
-     mutate("2011_weighted_rank"=((0.6 * (`2011_ranking.x`))+(0.4*(`2011_ranking.y`)))/2) %>% 
-     mutate("2012_weighted_rank"=((0.6 * (`2012_ranking.x`))+(0.4*(`2012_ranking.y`)))/2) %>% 
-     mutate("2013_weighted_rank"=((0.6 * (`2013_ranking.x`))+(0.4*(`2013_ranking.y`)))/2) %>% 
-     mutate("2014_weighted_rank"=((0.6 * (`2014_ranking.x`))+(0.4*(`2014_ranking.y`)))/2) %>% 
-     mutate("2015_weighted_rank"=((0.6 * (`2015_ranking.x`))+(0.4*(`2015_ranking.y`)))/2) %>% 
-     mutate("2016_weighted_rank"=((0.6 * (`2016_ranking.x`))+(0.4*(`2016_ranking.y`)))/2) %>% 
-     mutate("2017_weighted_rank"=((0.6 * (`2017_ranking.x`))+(0.4*(`2017_ranking.y`)))/2) %>% 
-     mutate("2018_weighted_rank"=((0.6 * (`2018_ranking.x`))+(0.4*(`2018_ranking.y`)))/2) %>% 
-     mutate("2019_weighted_rank"=((0.6 * (`2019_ranking.x`))+(0.4*(`2019_ranking.y`)))/2) %>% 
-     mutate("2020_weighted_rank"=((0.6 * (`2020_ranking.x`))+(0.4*(`2020_ranking.y`)))/2) %>%              mutate("10yr_weighted_rank"=((0.6 * (`10year_ranking.x`))+(0.4*(`10year_ranking.y`)))/2)
+     mutate("2011_weighted_rank"=((0.5 * (`2011_ranking.x`))+(0.5*(`2011_ranking.y`)))/2) %>% 
+     mutate("2012_weighted_rank"=((0.5 * (`2012_ranking.x`))+(0.5*(`2012_ranking.y`)))/2) %>% 
+     mutate("2013_weighted_rank"=((0.5 * (`2013_ranking.x`))+(0.5*(`2013_ranking.y`)))/2) %>% 
+     mutate("2014_weighted_rank"=((0.5* (`2014_ranking.x`))+(0.5*(`2014_ranking.y`)))/2) %>% 
+     mutate("2015_weighted_rank"=((0.5 * (`2015_ranking.x`))+(0.5*(`2015_ranking.y`)))/2) %>% 
+     mutate("2016_weighted_rank"=((0.5 * (`2016_ranking.x`))+(0.5*(`2016_ranking.y`)))/2) %>% 
+     mutate("2017_weighted_rank"=((0.5 * (`2017_ranking.x`))+(0.5*(`2017_ranking.y`)))/2) %>% 
+     mutate("2018_weighted_rank"=((0.5 * (`2018_ranking.x`))+(0.5*(`2018_ranking.y`)))/2) %>% 
+     mutate("2019_weighted_rank"=((0.5 * (`2019_ranking.x`))+(0.5*(`2019_ranking.y`)))/2) %>% 
+     mutate("2020_weighted_rank"=((0.5 * (`2020_ranking.x`))+(0.5*(`2020_ranking.y`)))/2) %>%              
+    mutate("10yr_weighted_rank"=((0.5 * (`10year_ranking.x`))+(0.5*(`10year_ranking.y`)))/2)
    
 
 economics_ranks_2011to2020 <- economics_weighted_ranks %>% 
@@ -706,10 +1089,10 @@ economics_ranks2011to2020
 
 ```{r combining road quality and electricity ranks}
 roadrank_summary1 <- roadrank_summary %>% 
-  rename(States = States)
-elecprice_rank_summary1 <- elecprice_rank_summary %>% 
+  rename(States = State)
+elecprice_rank_summary1 <- elecprice_rank%>% 
   rename(States = state)
-elecprice_rank_summary[17,1] <- "District of Columbia"
+elecprice_rank_summary1[35,1] <- "District of Columbia"
 
 overall_infrastructure_ranking_data <- roadrank_summary1 %>% 
           inner_join(elecprice_rank_summary1, by = "States")
@@ -771,9 +1154,8 @@ infrastruture_ranks2011to2020
 ```{r Health, Economics, Education, Infrastructure, and Crime_rate ranking combined}
 
 final_ranks_graduation <- final_ranked_graduation %>% 
-  rename( States = state) 
+  rename( States = States) 
 
-final_ranks_graduation[24,1] <- "Alabama"
 
 final_ranked_correction3 <-final_ranked_correction2 %>%
   rename(States = State)
@@ -792,19 +1174,23 @@ inner_join(final_ranks_graduation, by = "States") %>%
 
 
 
+
+
+
+
 ```{r Calculating overall ranks for all factors combined}
 Final_rankings <- Factor_rankings_combined %>% 
-mutate("2011" = (`2011_overall_erank`+`2011_overall_hrank`+`2011_edurank`+`2011_overall_irank`+`2011_corrank`)/4)%>%
-mutate("2012" = (`2012_overall_erank`+`2012_overall_hrank`+`2012_edurank`+`2012_overall_irank`+`2012_corrank`)/4)%>% 
-mutate("2013" = (`2013_overall_erank`+`2013_overall_hrank`+`2013_edurank`+`2013_overall_irank`+`2013_corrank`)/4)%>%
-mutate("2014" = (`2014_overall_erank`+`2014_overall_hrank`+`2014_edurank`+`2014_overall_irank`+`2014_corrank`)/4)%>%
-mutate("2015" = (`2015_overall_erank`+`2015_overall_hrank`+`2015_edurank`+`2015_overall_irank`+`2015_corrank`)/4)%>% 
-mutate("2016" = (`2016_overall_erank`+`2016_overall_hrank`+`2016_edurank`+`2016_overall_irank`+`2016_corrank`)/4)%>% 
-mutate("2017" = (`2017_overall_erank`+`2017_overall_hrank`+`2017_edurank`+`2017_overall_irank`+`2017_corrank`)/4)%>% 
-mutate("2018" = (`2018_overall_erank`+`2018_overall_hrank`+`2018_edurank`+`2018_overall_irank`+`2018_corrank`)/4)%>% 
-mutate("2019" = (`2019_overall_erank`+`2019_overall_hrank`+`2019_edurank`+`2019_overall_irank`+`2019_corrank`)/4)%>% 
-mutate("2020" = (`2020_overall_erank`+`2020_overall_hrank`+`2020_overall_irank`)/3) %>% 
-mutate("10_yr" = (`10yr_overall_erank`+`10yr_overall_hrank`+`10year_edurank`+`10yr_overall_irank`+ `10yr_corrank`)/4)  
+mutate("2011" = (0.3*(`2011_overall_erank`)+0.1*(`2011_overall_hrank`)+0.3*(`2011_edurank`)+0.2*(`2011_overall_irank`)+0.1*(`2011_corrank`))/5)%>%
+mutate("2012" = (0.3*(`2012_overall_erank`)+0.1*(`2012_overall_hrank`)+0.3*(`2012_edurank`)+0.2*(`2012_overall_irank`)+0.1*(`2012_corrank`))/5)%>% 
+mutate("2013" = (0.3*(`2013_overall_erank`)+0.1*(`2013_overall_hrank`)+0.3*(`2013_edurank`)+0.2*(`2013_overall_irank`)+0.1*(`2013_corrank`))/5)%>%
+mutate("2014" = (0.3*(`2014_overall_erank`)+0.1*(`2014_overall_hrank`)+0.3*(`2014_edurank`)+0.2*(`2014_overall_irank`)+0.1*(`2014_corrank`))/5)%>%
+mutate("2015" = (0.3*(`2015_overall_erank`)+0.1*(`2015_overall_hrank`)+0.3*(`2015_edurank`)+0.2*(`2015_overall_irank`)+0.1*(`2015_corrank`))/5)%>% 
+mutate("2016" = (0.3*(`2016_overall_erank`)+0.1*(`2016_overall_hrank`)+0.3*(`2016_edurank`)+0.2*(`2016_overall_irank`)+0.1*(`2016_corrank`))/5)%>% 
+mutate("2017" = (0.3*(`2017_overall_erank`)+0.1*(`2017_overall_hrank`)+0.3*(`2017_edurank`)+0.2*(`2017_overall_irank`)+0.1*(`2017_corrank`))/5)%>% 
+mutate("2018" = (0.3*(`2018_overall_erank`)+0.1*(`2018_overall_hrank`)+0.3*(`2018_edurank`)+0.2*(`2018_overall_irank`)+0.1*(`2018_corrank`))/5)%>% 
+mutate("2019" = (0.3*(`2019_overall_erank`)+0.1*(`2019_overall_hrank`)+0.3*(`2019_edurank`)+0.2*(`2019_overall_irank`)+0.1*(`2019_corrank`))/5)%>% 
+mutate("2020" = (0.3*(`2020_overall_erank`)+0.2*(`2020_overall_hrank`)+0.2*(`2020_overall_irank`) +0.3*(`2020_edurank`) )/4) %>% 
+mutate("10_yr" = (0.3*(`10yr_overall_erank`)+0.1*(`10yr_overall_hrank`)+0.3*(`10year_edurank`)+0.2*(`10yr_overall_irank`)+ 0.1*(`10yr_corrank`))/5)  
   
 
 Final_rankings
@@ -813,7 +1199,11 @@ Final_rankings
 ```
 
 
-```{r}
+
+
+
+
+```{r   ultimate ranks }
 Final_ranks <- Final_rankings %>%
   arrange(`10_yr`) %>% 
     mutate("2011" = min_rank(`2011`)) %>% 
@@ -833,7 +1223,9 @@ Final_ranks <- Final_rankings %>%
 ```
 
 
-```{r}
+
+
+```{r Final rankings }
 Final <- Final_ranks %>% 
   select(States, c(`2011`:`10yr`)) %>% 
   select(-c("10_yr"))
@@ -842,4 +1234,111 @@ Final <- Final_ranks %>%
  Final
 ```
 
+
+
+
+
+```{r 10 yr rankings for each of the factors combined}
+States_factor_rankings <- Final_ranks %>% 
+  arrange(`10yr`) %>% 
+select(States, `10yr_overall_erank`,`10yr_overall_hrank`,
+       `10yr_overall_irank`,`10year_edurank`,`10yr_corrank`,`10yr`) 
+  
+
+
+
+
+
+
+```
+
+
+
+
+
+```{r    Calculating the most improved states}
+
+Rank_change <- Final %>% 
+  mutate(change = `2011`- `2019`)
+
+most_improved_states <- Rank_change %>%
+  arrange(desc(change))%>% 
+  select(States,change) 
+
+```
+
+
+```{r loading US Map Chart library}
+
+library(usmap)
+
+
+
+
+
+
+```
+
+
+
+
+```{r Adding latitude and longitude variables for each state}
+
+states_mapinfo <- read_csv("states_mapinfo.csv")
+
+Final <- Final %>% 
+  inner_join(states_mapinfo, by = "States")
+
+
+
+```
+
+
+
+```{r preparing data to pass into map plotting function}
+
+states_ranks<- Final%>%
+#select(States, '10yr' )
+rename(state = States)
+
+us_states_ranks <- states_ranks %>% 
+  select(state, '10yr')
+us_states_ranks
+
+
+```
+
+
+
+```{r  Plotting US Map showing the rankings}
+
+plot_usmap(data = us_states_ranks, values = '10yr', color = "red", labels = TRUE) +
+  labs(title = "2011-2020 US STATES AVERAGE RANKING",
+       subtitle ="Based on five metrics:Health, Education, Infrastructure, Economics ,Corrections",
+       values ="State Rank")+
+  theme(legend.position = "right")
+
+
+
+```
+
+
+
+
+
+
+
+```{r top ten states as per the ten year average }
+    
+top_10_states <- Final[1:10,]
+
+top_10_states
+
+```
+
+```{r}
+#ggplot(top_10_states, aes(x= c("2011":"2020"), y=  , color = States)) +
+  #geom_line()
+
+```
 
