@@ -2728,7 +2728,7 @@ index = sample(1:nrow(Final), 6,replace = TRUE)
 index
 ```
 
-    ## [1] 27 30 10  6 43 25
+    ## [1] 44 12 27 24 50  6
 
 ``` r
 Random_states <- Final[index,] 
@@ -2876,7 +2876,7 @@ summary(y)
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   24.91   24.91   24.91   24.91   24.91   24.91
+    ##    34.9    34.9    34.9    34.9    34.9    34.9
 
 ``` r
 #plotting economics versus overall rank as per the simulated model
