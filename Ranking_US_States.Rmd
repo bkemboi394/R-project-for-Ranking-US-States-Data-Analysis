@@ -2,7 +2,7 @@
 title: "RANKING US STATES ON A YEARLY BASIS AND ON 10 YEAR AVERAGE FROM 2011 TO 2020"
 author: "Beatrice & Moreen"
 date: "3/15/2022"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
