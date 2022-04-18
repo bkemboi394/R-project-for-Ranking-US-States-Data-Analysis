@@ -1,0 +1,164 @@
+---
+title: "Final_Reflection"
+author: "Beatrice"
+date: "4/15/2022"
+output: github_document
+---
+[Project URL](https://github.com/bkemboi394/Ranking-US-States-Data-Analysis/blob/main/Ranking_US_States.md)
+
+Project partner : Moreen Owino
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction:
+
+Learning the ins and outs of R has been an exciting and mentally stimulating experience. I can now confidently claim to know R and would be totally comfortable with taking on projects that need use of R both in class and at work. The assigned readings, R Studio primer sessions, activities, and my project with Moreen Owino have contributed majorly to this mastery. In the sections below, I have highlighted each of the course objectives along with a small code chunk from either my in class activities or project and its output to demonstrate my grasp. 
+
+
+First, I am loading the tidyverse library as I will need it for most of my other code chunks. I will also keep loading other packages along the way if necessary to help me extend base R programs and functions.
+
+```{r loading tidyverse}
+
+library(tidyverse)
+
+```
+
+
+### Objective 1 : Import, manage, and clean data
+
+## Import:
+
+Learnt the different ways of loading and reading different types of documents in R, the read functions that are optimal for each, and the trade offs of one over the other. Though basic, I was glad to learn the difference between a data frame and a tibble and advantages of one over the other as well as the different ways to load imported data to make it either a data frame or a tibble, and also how to switch from one to the other. Also, learnt how to create a data folder to store a group of related data together and how to use the "here" function from the "here" package to load individual data sets from a data folder.Below is a small code chunk to demonstrate this.
+
+```{r loading unemployment rates data for 2019 }
+statesur_2019 <- read_csv(here::here("stateunemploymentdata", "statesunemploymentrate_2019.csv"))
+
+```
+
+## Clean:
+
+Learnt just how laborious and time consuming this part can be especially if you have limited knowledge on the functions that you need to achieve a particular cleaning task. The project helped me a lot with this part. At the very beginning, I was still doing things such as removing a thousand comma separator from a character column with numeric values and converting it to numeric one at a time, but as I progressed, I realized how unsustainable that was, which motivated me to to learn how to apply other things like iteration with maps, lapply, functions, and ultimately a combination of either to quickly and succinctly achieve a cleaning task that needed iteration. Below is a sample code from my project work that illustrates this part. My take away for this section is to keep looking up better and easier ways to achieve a specific task instead of sticking to the only ones that you know.
+
+```{r function to remove a thousand separator from values in approriate columns}
+
+col_conv <- c(2:11)  
+states_medianincome_2011to2018[ , col_conv] <- lapply(states_medianincome_2011to2018[ , col_conv],function(x){ as.numeric(as.character(gsub(",", "", x))) })
+
+states_medianincome_2011to2018
+```
+
+## Manage:
+
+Also one of the biggest sections. Learnt the different functions available in R that helps with managing data frames and tibbles. These include things like merging, pivoting, uniting and separating columns among others. Also, inclusive, are the different ways of sub-setting data, grouping them, filtering rows, selecting columns, and applying mutate and summary functions for analysis. Below is a code chunk to show this. 
+
+Moreover, it was interesting to learn about how to handle factors, strings, and and dates and times in R and the specific packages required for each of them as well as the cheat sheets for each of them. I believe they will come in handy one day.
+
+```{r pivoting }
+top_states <- top_n_states %>% 
+  pivot_longer(!States, names_to = "years", values_to = "ranks")
+top_states
+```
+
+```{r grouping, selecting, mutating, summarising, and arranging}
+category_rankings= college_recent_grads %>% 
+  group_by(major_category) %>% 
+    summarise(total_mctgry=sum(total,na.rm = TRUE),sharewomen_median=median(sharewomen), unemploymentrate=median(unemployment_rate),median_earns=median(median)) %>%
+  mutate(tota_mctgry_rank=min_rank(total_mctgry),sharewomen_rank=min_rank(sharewomen_median), unemploymentrate_rank=min_rank(unemploymentrate)) %>% 
+  arrange(major_category)
+  category_rankings
+  
+```
+
+```{r merging}
+regression_rank_data <- state_factor_rankings2 %>% 
+  inner_join(us_news_ranks, by ='States') %>% 
+select(-c(1))
+regression_rank_data
+```
+
+### Objective 2 : Create graphical displays and numerical summaries of data for exploratory analysis and presentations.
+
+Learnt the intricacies of using ggplot to create a variety of visualization objects such as lines, scatter plots, bar graphs, histograms, and maps for report creation purposes. Liked ggplot as it lets one keep adding modifications to their graphs one at a  time instead of all at once. In addition, it was great to know the use of pipelines to summarise data and draw graphs from from those summaries all at a go. Below is an illustration of this.
+
+
+```{r using mutate and summary functions to get numerical summaries }
+
+summary_earnings=college_recent_grads %>% 
+  select(employed_fulltime_yearround,median) %>% 
+     summarise(n=n(),mean_med_earnings=mean(median), sd_med_earnings=sd(median),min_med_earnings=min(median),max_med_earnings=max(median),median_med_earnings=median(median))
+summary_earnings
+```
+
+
+
+```{r pivoting and line graph plotting combined }
+top_states <- top_n_states %>% 
+  pivot_longer(!States, names_to = "years", values_to = "ranks") %>% 
+  ggplot() +
+  geom_line(aes(x = years , y = ranks , colour = States, group = States)) +
+  
+  labs(title = "Top Ranking States",
+       subtitle = " as per the 10yr average from 2011 - 2020")
+  
+top_states
+
+```
+
+
+## Objective 3: Write R programs for simulations from probability models and randomization-based experiments.
+
+
+As some one with a background in statistics, I found this section interesting and exciting. Using the knowledge from this section and from an hypothesis testing class, I was able to help implement a  multiple regression model and simulate varieties of the models using randomization to get the variables for the simulation. This part helped us extend the scope of our project as explained in the project URL provided. Below is a small code chunck to show this.
+
+```{r Modelling }
+multiple_regression <- lm(Ranks ~. , data = regression_rank_data) 
+summary(multiple_regression)
+
+```
+
+
+```{r Simulation}
+e <- sample(1:51, 1)  #Based on the 51 rankings for each state
+cor <-  sample(1:51, 1)
+
+edu <- sample(1:51, 1)
+
+
+
+y <- -1.378 + 0.518*e + 0.326*cor+ 0.216*edu +3.56170   
+summary(y)
+
+#plotting economics versus overall rank as per the simulated model
+plot(e, y)
+
+```
+
+## Objective 4:Use source documentation and other resources to troubleshoot and extend R programs
+
+Learnt how to use the '?' together with a name of some R function at the console in order to get thorough source documentation on it 
+
+Also, learnt the various packages needed for to handle different variables in R in order to extend it's programs such as the 'lubridate' for dates and times, and "purr" for maps .
+
+```{r packages for extending R programs }
+library(lubridate) #for dates and times 
+library(purrr)  #for maps and other vector  functions
+library(stringr)  #for string variables 
+library(forcats)   #for factor variables 
+```
+
+
+## Objective 5 : Write clear, efficient, and well-documented R programs
+
+I believe every objective covered thus far, together with the provided examples show my ability to write clear, efficient, and well-documented R programs.
+
+
+
+### Conclusion
+
+In conclusion, I am proud of coming this far with regards to my knowledge of R. I was a novice at the beginning, but as of now I am beginning to start feeling like a guru. I am particularly proud of my project with Moreen. At the start, our project seemed daunting especially since a lot of the data we were getting were so messy and scattered everywhere. We had to import and load it to R just as it were and apply all the cleaning and managing functions we could think of and find, just to preprocess it for our analysis. Now that we are done with our project, it's satisfying to see just how far we have come.
+
+It was nice to partner up with some one in this project as we both ended up learning a lot from each other and exchanging ideas that ultimately helped us get to a satisfactory ending for our project. I was also able to go through what other people in class are doing for their projects and offered feedback and exchanged ideas verbally with some of them. I, therefore, look forward to their presentations.
+
+Overall, taking everything into consideration, I would definitely give myself an A in this class.
