@@ -1332,8 +1332,7 @@ us_news_ranks
 
 ## Adding latitude and longitude variables for each state
 
-
-```{r Adding latitude and longitude variables for each state}
+{r Adding latitude and longitude variables for each state}
 
 states_mapinfo <- read_csv("states_mapinfo.csv")
 
@@ -1342,7 +1341,7 @@ Final <- Final %>%
 
 
 
-```
+
 
 ## preparing data to pass into map plotting function
 
