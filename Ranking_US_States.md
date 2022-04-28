@@ -834,6 +834,12 @@ college_graduationrate_data <- read_csv("College_Graduation_Rate_perstate.csv")
     ##   `2011` = col_character()
     ## )
 
+    ## Warning: 3 parsing failures.
+    ## row col   expected    actual                                   file
+    ##   1  -- 11 columns 1 columns 'College_Graduation_Rate_perstate.csv'
+    ##  53  -- 11 columns 1 columns 'College_Graduation_Rate_perstate.csv'
+    ## 105  -- 11 columns 1 columns 'College_Graduation_Rate_perstate.csv'
+
 ``` r
 col_conv <- c(5:11)  
 college_graduationrate_data[ , col_conv] <- lapply(college_graduationrate_data[ , col_conv],function(x){ as.numeric(as.character(gsub("%", "", x))) })
@@ -841,20 +847,20 @@ college_graduationrate_data[ , col_conv] <- lapply(college_graduationrate_data[ 
 college_graduationrate_data
 ```
 
-    ## # A tibble: 51 x 11
+    ## # A tibble: 105 x 11
     ##    States  `2020` `2019` `2018` `2017` `2016` `2015` `2014` `2013` `2012` `2011`
     ##    <chr>    <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
-    ##  1 Alabama   27.8   26.3   25.5   27.2   26.5   25.2   24.3   22.3   21.3   18  
-    ##  2 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
-    ##  3 Arizona   33     30.2   29.7   31.7   32.4   32.1   32.6   33.4   32.9   30.8
-    ##  4 Arkans…   24.9   23.3   23.3   33     33.4   29.5   28.7   27.7   25.4   23.9
-    ##  5 Califo…   36.9   35     34.2   39.4   38.5   37.4   38.3   38.7   38.8   39.9
-    ##  6 Colora…   44.2   42.7   41.7   56.4   61.9   54.8   49.7   48.2   44.7   43.5
-    ##  7 Connec…   42.4   39.8   39.6   29.1   24.8   23.9   22     16.8   15.2   15  
-    ##  8 Delawa…   34.7   33.2   31.3   44.2   58.4   63.9   59     71.3   16.1   16.4
-    ##  9 Distri…   63.6   59.7   60.4   68.9   73.8   73     59.1   61.6   66.7   82.4
-    ## 10 Florida   33.7   30.7   30.4   56.7   56.8   60.6   60.3   59.4   54.2   54.5
-    ## # … with 41 more rows
+    ##  1 <<<<<<…   NA     NA     NA     NA     NA     NA     NA     NA     NA     NA  
+    ##  2 Alabama   27.8   26.3   25.5   27.2   26.5   25.2   24.3   22.3   21.3   18  
+    ##  3 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
+    ##  4 Arizona   33     30.2   29.7   31.7   32.4   32.1   32.6   33.4   32.9   30.8
+    ##  5 Arkans…   24.9   23.3   23.3   33     33.4   29.5   28.7   27.7   25.4   23.9
+    ##  6 Califo…   36.9   35     34.2   39.4   38.5   37.4   38.3   38.7   38.8   39.9
+    ##  7 Colora…   44.2   42.7   41.7   56.4   61.9   54.8   49.7   48.2   44.7   43.5
+    ##  8 Connec…   42.4   39.8   39.6   29.1   24.8   23.9   22     16.8   15.2   15  
+    ##  9 Delawa…   34.7   33.2   31.3   44.2   58.4   63.9   59     71.3   16.1   16.4
+    ## 10 Distri…   63.6   59.7   60.4   68.9   73.8   73     59.1   61.6   66.7   82.4
+    ## # … with 95 more rows
 
 # Ranking the average graduation rate over the years
 
@@ -869,20 +875,20 @@ mutate("10year_mean" =rowMeans(select(., `2011`,`2012`,`2013`,`2014`,`2015`,`201
 tenyear_graduation
 ```
 
-    ## # A tibble: 51 x 12
+    ## # A tibble: 105 x 12
     ##    States  `2020` `2019` `2018` `2017` `2016` `2015` `2014` `2013` `2012` `2011`
     ##    <chr>    <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
-    ##  1 Alabama   27.8   26.3   25.5   27.2   26.5   25.2   24.3   22.3   21.3   18  
-    ##  2 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
-    ##  3 Arizona   33     30.2   29.7   31.7   32.4   32.1   32.6   33.4   32.9   30.8
-    ##  4 Arkans…   24.9   23.3   23.3   33     33.4   29.5   28.7   27.7   25.4   23.9
-    ##  5 Califo…   36.9   35     34.2   39.4   38.5   37.4   38.3   38.7   38.8   39.9
-    ##  6 Colora…   44.2   42.7   41.7   56.4   61.9   54.8   49.7   48.2   44.7   43.5
-    ##  7 Connec…   42.4   39.8   39.6   29.1   24.8   23.9   22     16.8   15.2   15  
-    ##  8 Delawa…   34.7   33.2   31.3   44.2   58.4   63.9   59     71.3   16.1   16.4
-    ##  9 Distri…   63.6   59.7   60.4   68.9   73.8   73     59.1   61.6   66.7   82.4
-    ## 10 Florida   33.7   30.7   30.4   56.7   56.8   60.6   60.3   59.4   54.2   54.5
-    ## # … with 41 more rows, and 1 more variable: 10year_mean <dbl>
+    ##  1 <<<<<<…   NA     NA     NA     NA     NA     NA     NA     NA     NA     NA  
+    ##  2 Alabama   27.8   26.3   25.5   27.2   26.5   25.2   24.3   22.3   21.3   18  
+    ##  3 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
+    ##  4 Arizona   33     30.2   29.7   31.7   32.4   32.1   32.6   33.4   32.9   30.8
+    ##  5 Arkans…   24.9   23.3   23.3   33     33.4   29.5   28.7   27.7   25.4   23.9
+    ##  6 Califo…   36.9   35     34.2   39.4   38.5   37.4   38.3   38.7   38.8   39.9
+    ##  7 Colora…   44.2   42.7   41.7   56.4   61.9   54.8   49.7   48.2   44.7   43.5
+    ##  8 Connec…   42.4   39.8   39.6   29.1   24.8   23.9   22     16.8   15.2   15  
+    ##  9 Delawa…   34.7   33.2   31.3   44.2   58.4   63.9   59     71.3   16.1   16.4
+    ## 10 Distri…   63.6   59.7   60.4   68.9   73.8   73     59.1   61.6   66.7   82.4
+    ## # … with 95 more rows, and 1 more variable: 10year_mean <dbl>
 
 # ranked\_graduation\_data
 
@@ -904,20 +910,20 @@ mutate('10year_edurank' = min_rank(desc(`10year_mean`)) )
 ranked_graduation_data
 ```
 
-    ## # A tibble: 51 x 23
+    ## # A tibble: 105 x 23
     ##    States  `2020` `2019` `2018` `2017` `2016` `2015` `2014` `2013` `2012` `2011`
     ##    <chr>    <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>  <dbl>
     ##  1 Distri…   63.6   59.7   60.4   68.9   73.8   73     59.1   61.6   66.7   82.4
-    ##  2 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
-    ##  3 South …   28.4   29.7   29.2   60.7   65.4   62.4   60.5   58.3   60.8   56.5
-    ##  4 Florida   33.7   30.7   30.4   56.7   56.8   60.6   60.3   59.4   54.2   54.5
-    ##  5 Nevada    28     25.7   24.9   64.6   60.9   62.4   57.4   56.9   59.8   52.8
-    ##  6 Colora…   44.2   42.7   41.7   56.4   61.9   54.8   49.7   48.2   44.7   43.5
-    ##  7 Washin…   38.4   37     36.7   51.6   50     47.4   55.7   50.9   46.7   45.9
-    ##  8 Delawa…   34.7   33.2   31.3   44.2   58.4   63.9   59     71.3   16.1   16.4
-    ##  9 North …   31.8   30.4   29.7   44.9   44.6   44.4   46.9   45.5   43.7   41.3
-    ## 10 Wyoming   28.2   29.1   26.9   41.4   43.2   39.7   43.3   48.9   47.7   43.3
-    ## # … with 41 more rows, and 12 more variables: 10year_mean <dbl>,
+    ##  2 Distri…   63.6   59.7   60.4   68.9   73.8   73     59.1   61.6   66.7   82.4
+    ##  3 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
+    ##  4 Alaska    31.9   30.2   30.2   75.3   70.7   70.7   66.4   67.2   68.2   72.4
+    ##  5 South …   28.4   29.7   29.2   60.7   65.4   62.4   60.5   58.3   60.8   56.5
+    ##  6 South …   28.4   29.7   29.2   60.7   65.4   62.4   60.5   58.3   60.8   56.5
+    ##  7 Florida   33.7   30.7   30.4   56.7   56.8   60.6   60.3   59.4   54.2   54.5
+    ##  8 Florida   33.7   30.7   30.4   56.7   56.8   60.6   60.3   59.4   54.2   54.5
+    ##  9 Nevada    28     25.7   24.9   64.6   60.9   62.4   57.4   56.9   59.8   52.8
+    ## 10 Nevada    28     25.7   24.9   64.6   60.9   62.4   57.4   56.9   59.8   52.8
+    ## # … with 95 more rows, and 12 more variables: 10year_mean <dbl>,
     ## #   2011_edurank <int>, 2012_edurank <int>, 2013_edurank <int>,
     ## #   2014_edurank <int>, 2015_edurank <int>, 2016_edurank <int>,
     ## #   2017_edurank <int>, 2018_edurank <int>, 2019_edurank <int>,
@@ -932,20 +938,20 @@ select(States, 13:23)
 final_ranked_graduation
 ```
 
-    ## # A tibble: 51 x 12
+    ## # A tibble: 105 x 12
     ##    States            `2011_edurank` `2012_edurank` `2013_edurank` `2014_edurank`
     ##    <chr>                      <int>          <int>          <int>          <int>
-    ##  1 District of Colu…              1              2              3              4
-    ##  2 Alaska                         2              1              2              1
-    ##  3 South Dakota                   3              3              5              2
-    ##  4 Florida                        4              5              4              3
-    ##  5 Nevada                         5              4              6              6
-    ##  6 Colorado                       7              8              9              8
-    ##  7 Washington                     6              7              7              7
-    ##  8 Delaware                      48             46              1              5
-    ##  9 North Dakota                   9              9             10              9
-    ## 10 Wyoming                        8              6              8             10
-    ## # … with 41 more rows, and 7 more variables: 2015_edurank <int>,
+    ##  1 District of Colu…              1              3              5              7
+    ##  2 District of Colu…              1              3              5              7
+    ##  3 Alaska                         3              1              3              1
+    ##  4 Alaska                         3              1              3              1
+    ##  5 South Dakota                   5              5              9              3
+    ##  6 South Dakota                   5              5              9              3
+    ##  7 Florida                        7              9              7              5
+    ##  8 Florida                        7              9              7              5
+    ##  9 Nevada                         9              7             11             11
+    ## 10 Nevada                         9              7             11             11
+    ## # … with 95 more rows, and 7 more variables: 2015_edurank <int>,
     ## #   2016_edurank <int>, 2017_edurank <int>, 2018_edurank <int>,
     ## #   2019_edurank <int>, 2020_edurank <int>, 10year_edurank <int>
 
@@ -2463,20 +2469,20 @@ mutate("10_yr" = (0.3*(`10yr_overall_erank`)+0.1*(`10yr_overall_hrank`)+0.3*(`10
 Final_rankings
 ```
 
-    ## # A tibble: 51 x 66
+    ## # A tibble: 102 x 66
     ##    States  `2011_overall_er… `2012_overall_er… `2013_overall_e… `2014_overall_e…
     ##    <chr>               <int>             <int>            <int>            <int>
     ##  1 New Ha…                 1                 1                1                1
-    ##  2 Hawaii                  7                12                2                2
-    ##  3 Utah                   11                 3                3                3
-    ##  4 Minnes…                 6                 7                4                3
-    ##  5 Nebras…                 3                10               10                8
-    ##  6 Vermont                10                 8                4                6
-    ##  7 North …                 2                 2                8                3
-    ##  8 Virgin…                 4                 3                4                9
-    ##  9 Maryla…                 4                 3                8                7
-    ## 10 Massac…                 7                 8               13               13
-    ## # … with 41 more rows, and 61 more variables: 2015_overall_erank <int>,
+    ##  2 New Ha…                 1                 1                1                1
+    ##  3 Hawaii                  7                12                2                2
+    ##  4 Hawaii                  7                12                2                2
+    ##  5 Utah                   11                 3                3                3
+    ##  6 Utah                   11                 3                3                3
+    ##  7 Minnes…                 6                 7                4                3
+    ##  8 Minnes…                 6                 7                4                3
+    ##  9 Nebras…                 3                10               10                8
+    ## 10 Nebras…                 3                10               10                8
+    ## # … with 92 more rows, and 61 more variables: 2015_overall_erank <int>,
     ## #   2016_overall_erank <int>, 2017_overall_erank <int>,
     ## #   2018_overall_erank <int>, 2019_overall_erank <int>,
     ## #   2020_overall_erank <int>, 10yr_overall_erank <int>,
@@ -2528,20 +2534,20 @@ Final <- Final_ranks %>%
  Final
 ```
 
-    ## # A tibble: 51 x 12
+    ## # A tibble: 102 x 12
     ##    States  `2011` `2012` `2013` `2014` `2015` `2016` `2017` `2018` `2019` `2020`
     ##    <chr>    <int>  <int>  <int>  <int>  <int>  <int>  <int>  <int>  <int>  <int>
-    ##  1 North …      1      1      1      1      1      1      1      7     19     11
-    ##  2 Nebras…      2      3      4      2      2      2      4      4      8      7
-    ##  3 South …      4      5      3      3      8      5      7     28     27     19
-    ##  4 Utah         5      4      5      8      4     11     13      7      4      9
-    ##  5 Minnes…      6      7      6      7      5      6      8      1      5      6
-    ##  6 Wyoming      3      2      2      4      3     13     12     40     30     23
-    ##  7 Washin…      7      8      8      6      6      7      5     13     12     16
-    ##  8 Iowa         9      6      7      5      9      4      3     11     13     14
-    ##  9 Distri…     11      9     10     11     11      8      6     14     10      5
-    ## 10 Kansas       8      9      9     10     10     12     15     16     15     13
-    ## # … with 41 more rows, and 1 more variable: 10yr <int>
+    ##  1 North …      1      1      1      1      1      1      1     27     43     31
+    ##  2 North …      1      1      1      1      1      1      1     27     43     31
+    ##  3 South …      5      5      3      3      5      5     11     61     55     57
+    ##  4 South …      5      5      3      3      5      5     11     61     55     57
+    ##  5 Nebras…      7      9      7      5      3     11      9     21     23     21
+    ##  6 Nebras…      7      9      7      5      3     11      9     21     23     21
+    ##  7 Distri…     13     11     13     13     13      7      7     15     15      1
+    ##  8 Distri…     13     11     13     13     13      7      7     15     15      1
+    ##  9 Washin…     11     13      9      9      7      9      5     23     25     29
+    ## 10 Washin…     11     13      9      9      7      9      5     23     25     29
+    ## # … with 92 more rows, and 1 more variable: 10yr <int>
 
 ## Showing 10 yr rankings for each of the factors
 
@@ -2556,20 +2562,20 @@ select(States, `10yr_overall_erank`,`10yr_overall_hrank`,
 States_factor_rankings
 ```
 
-    ## # A tibble: 51 x 7
+    ## # A tibble: 102 x 7
     ##    States   `10yr_overall_er… `10yr_overall_h… `10yr_overall_i… `10year_edurank`
     ##    <chr>                <int>            <int>            <int>            <int>
-    ##  1 North D…                 7                8                2                9
-    ##  2 Nebraska                 5               15                5               17
-    ##  3 South D…                13               22               11                3
-    ##  4 Utah                     3               38               15               16
-    ##  5 Minneso…                 3                4               25               23
-    ##  6 Wyoming                 14               35                6               10
-    ##  7 Washing…                18               25               22                7
-    ##  8 Iowa                    11                1               19               24
-    ##  9 Distric…                23                3               44                1
-    ## 10 Kansas                  15               23               20               15
-    ## # … with 41 more rows, and 2 more variables: 10yr_corrank <int>, 10yr <int>
+    ##  1 North D…                 7                8                2               17
+    ##  2 North D…                 7                8                2               17
+    ##  3 South D…                13               22               11                5
+    ##  4 South D…                13               22               11                5
+    ##  5 Nebraska                 5               15                5               33
+    ##  6 Nebraska                 5               15                5               33
+    ##  7 Distric…                23                3               44                1
+    ##  8 Distric…                23                3               44                1
+    ##  9 Washing…                18               25               22               13
+    ## 10 Washing…                18               25               22               13
+    ## # … with 92 more rows, and 2 more variables: 10yr_corrank <int>, 10yr <int>
 
 ## Finding the most Improved States
 
@@ -2622,22 +2628,11 @@ us_news_ranks
 
 ## Adding latitude and longitude variables for each state
 
-``` r
-states_mapinfo <- read_csv("states_mapinfo.csv")
-```
+{r Adding latitude and longitude variables for each state}
 
-    ## 
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## cols(
-    ##   States = col_character(),
-    ##   Latitude = col_double(),
-    ##   Longitude = col_double()
-    ## )
+states\_mapinfo &lt;- read\_csv(“states\_mapinfo.csv”)
 
-``` r
-Final <- Final %>% 
-  inner_join(states_mapinfo, by = "States")
-```
+Final &lt;- Final %&gt;% inner\_join(states\_mapinfo, by = “States”)
 
 ## preparing data to pass into map plotting function
 
@@ -2729,7 +2724,7 @@ index = sample(1:nrow(Final), 6,replace = TRUE)
 index
 ```
 
-    ## [1] 34 41 10 38  2 31
+    ## [1]  6 62 46 99 62 83
 
 ``` r
 Random_states <- Final[index,] 
@@ -2776,20 +2771,20 @@ select(-c(1))
 regression_rank_data
 ```
 
-    ## # A tibble: 51 x 6
+    ## # A tibble: 102 x 6
     ##    `10yr_overall_erank` `10yr_overall_hran… `10yr_overall_iran… `10year_edurank`
     ##                   <int>               <int>               <int>            <int>
-    ##  1                    7                   8                   2                9
-    ##  2                    5                  15                   5               17
-    ##  3                   13                  22                  11                3
-    ##  4                    3                  38                  15               16
-    ##  5                    3                   4                  25               23
-    ##  6                   14                  35                   6               10
-    ##  7                   18                  25                  22                7
-    ##  8                   11                   1                  19               24
-    ##  9                   23                   3                  44                1
-    ## 10                   15                  23                  20               15
-    ## # … with 41 more rows, and 2 more variables: 10yr_corrank <int>, Ranks <dbl>
+    ##  1                    7                   8                   2               17
+    ##  2                    7                   8                   2               17
+    ##  3                   13                  22                  11                5
+    ##  4                   13                  22                  11                5
+    ##  5                    5                  15                   5               33
+    ##  6                    5                  15                   5               33
+    ##  7                   23                   3                  44                1
+    ##  8                   23                   3                  44                1
+    ##  9                   18                  25                  22               13
+    ## 10                   18                  25                  22               13
+    ## # … with 92 more rows, and 2 more variables: 10yr_corrank <int>, Ranks <dbl>
 
 ## First Multiple Regression model for economics, corrections, education, health, and infrastructure
 
@@ -2804,22 +2799,22 @@ summary(multiple_regression)
     ## 
     ## Residuals:
     ##     Min      1Q  Median      3Q     Max 
-    ## -20.183  -3.570   1.122   3.680  21.228 
+    ## -20.183  -3.614   1.122   3.736  21.228 
     ## 
     ## Coefficients:
     ##                      Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)          -3.74061    5.01104  -0.746  0.45926    
-    ## `10yr_overall_erank`  0.54438    0.11075   4.915 1.22e-05 ***
-    ## `10yr_overall_hrank` -0.06922    0.12218  -0.567  0.57382    
-    ## `10yr_overall_irank`  0.11276    0.09936   1.135  0.26245    
-    ## `10year_edurank`      0.17650    0.09503   1.857  0.06981 .  
-    ## `10yr_corrank`        0.38831    0.11141   3.485  0.00111 ** 
+    ## (Intercept)          -3.65236    3.41958  -1.068  0.28817    
+    ## `10yr_overall_erank`  0.54438    0.07583   7.179 1.48e-10 ***
+    ## `10yr_overall_hrank` -0.06922    0.08365  -0.828  0.40999    
+    ## `10yr_overall_irank`  0.11276    0.06803   1.658  0.10067    
+    ## `10year_edurank`      0.08825    0.03253   2.713  0.00791 ** 
+    ## `10yr_corrank`        0.38831    0.07628   5.091 1.78e-06 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 9.299 on 45 degrees of freedom
-    ## Multiple R-squared:  0.6479, Adjusted R-squared:  0.6088 
-    ## F-statistic: 16.56 on 5 and 45 DF,  p-value: 2.967e-09
+    ## Residual standard error: 9.003 on 96 degrees of freedom
+    ## Multiple R-squared:  0.6479, Adjusted R-squared:  0.6295 
+    ## F-statistic: 35.33 on 5 and 96 DF,  p-value: < 2.2e-16
 
 ## Accordind to the multiple regression model the 5 metrics used have an adjusted R value of 0.6088 implying that the metrics used in the project account for 60% of the weight in determination of a states rank and the remaining factors only account for 40%
 
@@ -2841,20 +2836,20 @@ summary(multiple_regression2)
     ## 
     ## Residuals:
     ##      Min       1Q   Median       3Q      Max 
-    ## -23.6316  -2.6826   0.1326   3.8408  18.8274 
+    ## -23.6316  -2.6894   0.1326   4.0815  18.8274 
     ## 
     ## Coefficients:
     ##                      Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)          -1.37807    3.56170  -0.387  0.70057    
-    ## `10yr_overall_erank`  0.51831    0.10187   5.088 6.24e-06 ***
-    ## `10yr_corrank`        0.32619    0.10011   3.258  0.00209 ** 
-    ## `10year_edurank`      0.21609    0.09064   2.384  0.02121 *  
+    ## (Intercept)          -1.27002    2.44942  -0.518 0.605279    
+    ## `10yr_overall_erank`  0.51831    0.07054   7.347 6.09e-11 ***
+    ## `10yr_corrank`        0.32619    0.06933   4.705 8.34e-06 ***
+    ## `10year_edurank`      0.10805    0.03138   3.443 0.000848 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 9.313 on 47 degrees of freedom
-    ## Multiple R-squared:  0.6311, Adjusted R-squared:  0.6076 
-    ## F-statistic:  26.8 on 3 and 47 DF,  p-value: 2.967e-10
+    ## Residual standard error: 9.121 on 98 degrees of freedom
+    ## Multiple R-squared:  0.6311, Adjusted R-squared:  0.6198 
+    ## F-statistic: 55.88 on 3 and 98 DF,  p-value: < 2.2e-16
 
 ## After our second multiple regression model, we arrived at the following multiple regression equation
 
@@ -2878,7 +2873,7 @@ summary(y)
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   4.496  22.718  29.793  29.695  36.720  55.918
+    ##   4.002  22.921  29.993  29.936  36.904  55.164
 
 ``` r
 #plotting economics versus overall rank as per the simulated model
