@@ -734,6 +734,7 @@ combined_correction_data
 ranked_correction_data <- combined_correction_data %>%
 arrange(desc(`10year_mean`)) %>% 
 mutate('2011_ranking' =min_rank((`correction_2011`))) %>% 
+  
 mutate('2012_ranking' = min_rank((`correction_2012`) )) %>% 
 mutate('2013_ranking' = min_rank((`correction_2013`)) ) %>% 
 mutate('2014_ranking' = min_rank((`correction_2014`)) ) %>% 
@@ -2695,7 +2696,7 @@ top_states <- top_n_states %>%
   labs(title = "Top Ranking States",
        subtitle = " as per the 10yr average from 2011 - 2020")
   
-top_states
+top_states +scale_y_reverse()
 ```
 
 ![](Ranking_US_States_files/figure-gfm/subsetting%20data%20for%20top%20states%20based%20on%2010%20yr%20average%20and%20plotting%20their%20ranks-1.png)<!-- -->
@@ -2716,7 +2717,7 @@ top5_improved_states <- top5_mistates%>%
        subtitle = "2011 - 2019")
   
 
-top5_improved_states
+top5_improved_states +scale_y_reverse()
 ```
 
 ![](Ranking_US_States_files/figure-gfm/subsetting%20data%20for%20most%20improved%20states%20and%20plotting%20their%20ranks-1.png)<!-- -->
@@ -2728,7 +2729,7 @@ index = sample(1:nrow(Final), 6,replace = TRUE)
 index
 ```
 
-    ## [1]  9 24 13 28 46 15
+    ## [1] 34 41 10 38  2 31
 
 ``` r
 Random_states <- Final[index,] 
@@ -2744,7 +2745,7 @@ random_states_ranks <- random_states%>%
        subtitle = "2011 - 2020")
   
 
-random_states_ranks
+random_states_ranks +scale_y_reverse()
 ```
 
 ![](Ranking_US_States_files/figure-gfm/Generating%20random%20states%20and%20plotting%20their%20graphs%20over%20time-1.png)<!-- -->
@@ -2864,10 +2865,11 @@ summary(multiple_regression2)
 ## y stand for overall ranking
 
 ``` r
-e <- sample(1:51, 1)  #Based on the 51 rankings for each state
-cor <-  sample(1:51, 1)
+n <- c(1:51)
+e <- sample(n,10000, replace = TRUE)  #Based on the 51 rankings for each state
+cor <-  sample(n,10000, replace = TRUE) 
 
-edu <- sample(1:51, 1)
+edu <- sample(n,10000, replace = TRUE) 
 
 
 
@@ -2876,7 +2878,7 @@ summary(y)
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   32.08   32.08   32.08   32.08   32.08   32.08
+    ##   4.496  22.718  29.793  29.695  36.720  55.918
 
 ``` r
 #plotting economics versus overall rank as per the simulated model
